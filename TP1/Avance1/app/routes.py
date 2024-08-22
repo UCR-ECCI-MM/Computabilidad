@@ -1,5 +1,11 @@
 from flask import render_template
 from flask import current_app as app
+import ast
+
+""" EXAMPLE DATA """
+dictionary = {}
+with open("app/data/example.json", "r") as data:
+    dictionary = ast.literal_eval(data.read())
 
 @app.route('/', methods=['GET'])
 def index():
@@ -7,7 +13,7 @@ def index():
 
 @app.route('/feature1.html', methods=['GET'])
 def render_feature_1():
-    return render_template("feature1.html")
+    return render_template("feature1.html", json_data=dictionary)
 
 @app.route('/feature2.html', methods=['GET'])
 def render_feature_2():
