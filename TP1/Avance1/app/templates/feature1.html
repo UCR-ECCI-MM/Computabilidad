@@ -1,10 +1,75 @@
 {% extends 'base.html' %}
 
-{% block title %}Feature 1{% endblock %}
+{% block title %}XML Tree Diagram{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='style_feature1.css')}}" type="text/css" />
+<link rel="stylesheet" href="{{url_for('static', filename='jsonTree/styles.css')}}" type="text/css" />
+<link rel="stylesheet" href="{{url_for('static', filename='jsonTree/jsontree.js.css')}}" type="text/css" />
+
+<script src="{{url_for('static', filename='jsonTree/jsontree.js')}}" charset="utf-8"></script>
+<script charset="utf-8">
+// SOURCE: https://github.com/williamtroup/JsonTree.js/tree/main
+( () => {
+    document.addEventListener( "DOMContentLoaded", function() {
+        document.title += " v" + $jsontree.getVersion();
+        document.getElementById( "header" ).innerText += ` - v${$jsontree.getVersion()}`;
+    } );
+} )();
+
+function bindingOptions( showValueColors = true, allowValueToolTips = true ) {
+    return {
+        data: [{{json_data | tojson }}],
+        parse: {
+            stringsToDates: true,
+            stringsToBooleans: true,
+            stringsToNumbers: true,
+        },
+        events: {
+            onValueClick: onValueClickEvent,
+        },
+        showValueColors: showValueColors,
+        showArrayItemsAsSeparateObjects: true,
+        copyOnlyCurrentPage: false,
+        sortPropertyNames: true,
+        showArrayIndexBrackets: true,
+        showOpeningClosingCurlyBraces: false,
+        showOpeningClosingSquaredBrackets: false,
+        showCommas: false,
+        showArrowToggles: true,
+        openInFullScreenMode: false,
+        enableFullScreenToggling: true,
+        valueToolTips: allowValueToolTips ? {
+            "value1": "This is a boolean tooltip for Value 1",
+            "value5\\1": "This is a string tooltip for Value 1 > Array Index 1",
+            "value6\\objectValue3": "This is a number tooltip for objectValue3",
+            "parsing\\booleans\\value1": "This is a boolean tooltip for Value 1 on Page 2",
+        } : null
+    };
+}
+
+function onValueClickEvent( value, type ) {
+    if ( typeof value === "function" ) {
+        value = "function";
+    } else if ( value === null ) {
+        value = "null";
+    } else if ( value === undefined ) {
+        value = "undefined";
+    }
+
+    console.log( `Type: ${type}, Value: ${JSON.stringify( value, onValueClickJsonReplacer )}` );
+}
+
+function onValueClickJsonReplacer( _, value ) {
+    if ( typeof value === "bigint" ) {
+        value = value.toString();
+    }
+
+    return value;
+}
+</script>
+{% endblock %}
 
 {% block content %}
-    <div class="section">
-        <h1>Lorem Ipsum</h1>
-        <p>Lorem Ipsum</p>
-    </div>
+  <div id="json-tree-1" data-jsontree-js="bindingOptions"></div>
 {% endblock %}
