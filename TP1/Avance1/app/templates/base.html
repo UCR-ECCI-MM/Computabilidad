@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {% endblock %}</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}" type="text/css" />
+</head>
+
+<body>
+
+    <div class="navbar">
+        <button onclick="window.location.href='/';">Home</button>
+        <button onclick="window.location.href='feature1.html';">Feature 1</button>
+        <button onclick="window.location.href='feature2.html';">Feature 2</button>
+        <button onclick="window.location.href='feature3.html';">Feature 3</button>
+    </div>
+
+    <div class="content">
+        {% block content %} {% endblock %}
+    </div>
+
+</body>
+
+</html>
