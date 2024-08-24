@@ -10,13 +10,6 @@
 <script src="{{url_for('static', filename='jsonTree/jsontree.js')}}" charset="utf-8"></script>
 <script charset="utf-8">
 // SOURCE: https://github.com/williamtroup/JsonTree.js/tree/main
-( () => {
-    document.addEventListener( "DOMContentLoaded", function() {
-        document.title += " v" + $jsontree.getVersion();
-        document.getElementById( "header" ).innerText += ` - v${$jsontree.getVersion()}`;
-    } );
-} )();
-
 function bindingOptions( showValueColors = true, allowValueToolTips = true ) {
     return {
         data: [{{json_data | tojson }}],
