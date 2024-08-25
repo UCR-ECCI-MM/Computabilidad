@@ -4,11 +4,116 @@
 
 {% block head %}
 <link rel="stylesheet" href="{{url_for('static', filename='style.css')}}" type="text/css" />
+
+<style>
+       body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+        a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+</style>
 {% endblock %}
 
 {% block content %}
     <div class="section">
-        <h1>Lorem Ipsum</h1>
-        <p>Lorem Ipsum</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Meta Description</th>
+                    <th>Also Called</th>
+                    <th>Full Summary</th>
+                    <th>Groups</th>
+                    <th>Resources</th>
+                </tr>
+            </thead>
+            <tbody>
+                {#  if "health_topic" in json_data["health-topics"] in item #}
+                {% for health_topic in json_data["health-topics"]["health-topic"] %}
+                <tr>
+                    <td>{{health_topic["@title"]}}</td>
+                    <td>{{health_topic["@meta-desc"]}}</td>
+                    <td>
+                        <ul>
+                            {# if "also-called" in health_topic in item #}
+                            {% if health_topic["also-called"] is iterable %}
+                            {% if health_topic["also-called"] is string %}  
+                            <li><a href="{{health_topic["@url"]}}">{{health_topic["also-called"]}}</a></li>
+                            {%  else %}
+                            {% for item in health_topic["also-called"] %}
+                            <li><a href="{{health_topic["@url"]}}">{{item}}</a></li>
+                            {% endfor %}
+                            {% endif %}
+                            {% endif %}
+                            {# endif #}
+                        </ul>
+                    </td>
+                    <td>
+                        {{health_topic["full-summary"]["p"][0]["#text"]}}
+                        <ul>
+                        {# if "@title" in health_topic in item #}
+                        {# if "full-summary" in health_topic["@title"] in item #}
+                        {% if "ul" in health_topic["@title"]["full-summary"] in item %}
+                        {# if "li" in health_topic["@title"]["full-summary"]["ul"] in item #}
+                        {% for item in health_topic["@title"]["full-summary"]["ul"]["li"] %}
+                            <li>{{item}}</li>
+                        {% endfor %}
+                        {# endif #}
+                        {% endif %}
+                        {# endif #}
+                        {# endif #}
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            {# if "@title" in health_topic in item #}
+                            {# if "group" in health_topic["@title"]["group"] in item #}
+                            {% for item in health_topic["@title"]["group"] %}
+                            <li><a href="{{item["@url"]}}">{{item["@text"]}}</a></li>
+                            {% endfor %}
+                            {# endif #}
+                            {# endif #}
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            {# if "@title" in health_topic in item #}
+                            {# if "site" in health_topic["@title"]["site"] in item #}
+                            {% for item in health_topic["@title"]["site"] %}
+                            <li><a href="{{item["@url"]}}">{{item["@title"]}}</a></li>
+                            {% endfor %}
+                            {# endif #}
+                            {# endif #}
+                        </ul>
+                    </td>
+                </tr>
+                {% endfor %}
+                {#  endif #}
+            </tbody>
+        </table>
     </div>
 {% endblock %}
