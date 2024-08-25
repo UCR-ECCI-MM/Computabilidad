@@ -7,12 +7,12 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from io import BytesIO
 import base64
-
+import json
 
 """ EXAMPLE DATA """
 dictionary = {}
-with open("app/data/example.json", "r") as data:
-    dictionary = ast.literal_eval(data.read())
+with open("app/data/dataset.json", "r") as data:
+    dictionary = json.loads(data.read())
 
 # Example data with  <information- category> tag counts:
 inf_category_counts = {
@@ -68,4 +68,4 @@ def render_feature_2():
 
 @app.route('/feature3.html', methods=['GET'])
 def render_feature_3():
-    return render_template("feature3.html")
+    return render_template("feature3.html",json_data=dictionary)
