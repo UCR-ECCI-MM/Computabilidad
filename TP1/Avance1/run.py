@@ -1,3 +1,7 @@
+"""
+This is the starting point for the whole program.
+"""
+
 from app import create_app
 
 app = create_app()
