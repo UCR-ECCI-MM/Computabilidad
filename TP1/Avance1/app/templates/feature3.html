@@ -75,11 +75,11 @@
                         <ul>
                             {% if "group" in health_topic %}
                                 {% if health_topic["group"] is mapping %}
-                                <li><a href="{{health_topic["group"]["@url"]}}">{{health_topic["group"]["#text"]}}</a></li>
+                            <li><a href="{{health_topic["group"]["@url"]}}">{{health_topic["group"]["#text"]}}</a></li>
                                 {% else %}
                                     {% if health_topic["group"] is iterable and not health_topic["group"] is string %}
                                         {% for group_ in health_topic["group"] %}
-                                            <li><a href="{{group_["@url"]}}">{{group_["#text"]}}</a></li>
+                            <li><a href="{{group_["@url"]}}">{{group_["#text"]}}</a></li>
                                         {% endfor %}
                                     {% endif %}
                                 {% endif %}
@@ -90,12 +90,12 @@
                         <ul>
                             {% if "site" in health_topic %}
                                 {% if health_topic["site"] is mapping %}
-                                <li><a href="{{health_topic["site"]["@url"]}}">{{health_topic["site"]["@title"]}}</a></li>
+                            <li><a href="{{health_topic["site"]["@url"]}}">{{health_topic["site"]["@title"]}}</a></li>
                                 {% else %}
                                     {% if health_topic["site"] is iterable and not health_topic["site"] is string %}
                                         {%- for reference in health_topic["site"] %}
                                             {% if loop.index <= 2 %}
-                                            <li><a href="{{reference["@url"]}}">{{reference["@title"]}}</a></li>
+                            <li><a href="{{reference["@url"]}}">{{reference["@title"]}}</a></li>
                                             {% endif %}
                                         {%- endfor %}
                                     {% endif %}
