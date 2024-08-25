@@ -8,11 +8,10 @@
 <style>
        body {
             font-family: Arial, sans-serif;
-            margin: 20px;
             background-color: #f4f4f4;
         }
         table {
-            width: 100%;
+            width: 70%;
             border-collapse: collapse;
             margin: 20px 0;
             background: white;
@@ -39,81 +38,74 @@
 {% endblock %}
 
 {% block content %}
-    <div class="section">
         <table>
             <thead>
                 <tr>
                     <th>Title</th>
-                    <th>Meta Description</th>
+                    <th>Description</th>
                     <th>Also Called</th>
-                    <th>Full Summary</th>
                     <th>Groups</th>
                     <th>Resources</th>
                 </tr>
             </thead>
             <tbody>
-                {#  if "health_topic" in json_data["health-topics"] in item #}
+                {%  if "health-topic" in json_data["health-topics"] %}
                 {% for health_topic in json_data["health-topics"]["health-topic"] %}
                 <tr>
                     <td>{{health_topic["@title"]}}</td>
                     <td>{{health_topic["@meta-desc"]}}</td>
                     <td>
                         <ul>
-                            {# if "also-called" in health_topic in item #}
+                            {% if "also-called" in health_topic %}
                             {% if health_topic["also-called"] is iterable %}
                             {% if health_topic["also-called"] is string %}  
                             <li><a href="{{health_topic["@url"]}}">{{health_topic["also-called"]}}</a></li>
-                            {%  else %}
+                            {% else %}
                             {% for item in health_topic["also-called"] %}
                             <li><a href="{{health_topic["@url"]}}">{{item}}</a></li>
                             {% endfor %}
                             {% endif %}
                             {% endif %}
-                            {# endif #}
-                        </ul>
-                    </td>
-                    <td>
-                        {{health_topic["full-summary"]["p"][0]["#text"]}}
-                        <ul>
-                        {# if "@title" in health_topic in item #}
-                        {# if "full-summary" in health_topic["@title"] in item #}
-                        {% if "ul" in health_topic["@title"]["full-summary"] in item %}
-                        {# if "li" in health_topic["@title"]["full-summary"]["ul"] in item #}
-                        {% for item in health_topic["@title"]["full-summary"]["ul"]["li"] %}
-                            <li>{{item}}</li>
-                        {% endfor %}
-                        {# endif #}
-                        {% endif %}
-                        {# endif #}
-                        {# endif #}
+                            {% else %}
+                            N/A
+                            {% endif %}
                         </ul>
                     </td>
                     <td>
                         <ul>
-                            {# if "@title" in health_topic in item #}
-                            {# if "group" in health_topic["@title"]["group"] in item #}
-                            {% for item in health_topic["@title"]["group"] %}
-                            <li><a href="{{item["@url"]}}">{{item["@text"]}}</a></li>
-                            {% endfor %}
-                            {# endif #}
-                            {# endif #}
+                            {% if "group" in health_topic %}
+                                {% if health_topic["group"] is mapping %}
+                                <li><a href="{{health_topic["group"]["@url"]}}">{{health_topic["group"]["#text"]}}</a></li>
+                                {% else %}
+                                    {% if health_topic["group"] is iterable and not health_topic["group"] is string %}
+                                        {% for group_ in health_topic["group"] %}
+                                            <li><a href="{{group_["@url"]}}">{{group_["#text"]}}</a></li>
+                                        {% endfor %}
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
                         </ul>
                     </td>
                     <td>
                         <ul>
-                            {# if "@title" in health_topic in item #}
-                            {# if "site" in health_topic["@title"]["site"] in item #}
-                            {% for item in health_topic["@title"]["site"] %}
-                            <li><a href="{{item["@url"]}}">{{item["@title"]}}</a></li>
-                            {% endfor %}
-                            {# endif #}
-                            {# endif #}
+                            {% if "site" in health_topic %}
+                                {% if health_topic["site"] is mapping %}
+                                <li><a href="{{health_topic["site"]["@url"]}}">{{health_topic["site"]["@title"]}}</a></li>
+                                {% else %}
+                                    {% if health_topic["site"] is iterable and not health_topic["site"] is string %}
+                                        {%- for reference in health_topic["site"] %}
+                                            {% if loop.index <= 2 %}
+                                            <li><a href="{{reference["@url"]}}">{{reference["@title"]}}</a></li>
+                                            {% endif %}
+                                        {%- endfor %}
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
                         </ul>
                     </td>
                 </tr>
                 {% endfor %}
-                {#  endif #}
+                {%  endif %}
             </tbody>
         </table>
-    </div>
 {% endblock %}
