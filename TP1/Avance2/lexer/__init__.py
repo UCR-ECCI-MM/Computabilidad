@@ -17,22 +17,26 @@ import ply.lex as lex
  
 # List of token names.   This is always required
 tokens = (
+    # XML Header
+    'XML_TAG',
+    'XML_CLOSURE',
+    'ATTRIBUTE_VERSION',
+    'ATTRIBUTE_ENCODING',
+    'ATTRIBUTE_TEXT',
+
+
+    # TODO: remove following tokens
     'NUMBER',
-    'PLUS',
-    'MINUS',
-    'TIMES',
-    'DIVIDE',
-    'LPAREN',
-    'RPAREN',
 )
  
 # Regular expression rules for simple tokens
-t_PLUS    = r'\+'
-t_MINUS   = r'-'
-t_TIMES   = r'\*'
-t_DIVIDE  = r'/'
-t_LPAREN  = r'\('
-t_RPAREN  = r'\)'
+# XML Header
+t_XML_TAG = r'<\?xml'
+t_XML_CLOSURE = r'\?>'
+t_ATTRIBUTE_VERSION = r'version='
+t_ATTRIBUTE_ENCODING = r'encoding='
+t_ATTRIBUTE_TEXT = r'"[^"]*"' # Capture text enclosed in double quotes but not including cases with double inner quotation marks 
+
  
 # A regular expression rule with some action code
 def t_NUMBER(t):
