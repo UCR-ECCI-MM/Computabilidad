@@ -32,6 +32,8 @@ tokens = (
     # Tags under <health-topic>
     'TAG_LANGUAGE_MAPPED_TOPIC',
     'TAG_LANGUAGE_MAPPED_TOPIC_CLOSURE',
+    'TAG_FULL_SUMMARY',
+    'TAG_FULL_SUMMARY_CLOSURE',
     'TAG_ALSO_CALLED',
     'TAG_ALSO_CALLED_CLOSURE',
 
@@ -70,6 +72,9 @@ t_ignore  = ' \t'
 # language-mapped-topic tag
 t_TAG_LANGUAGE_MAPPED_TOPIC = r'<language-mapped-topic'
 t_TAG_LANGUAGE_MAPPED_TOPIC_CLOSURE = r'</language-mapped-topic'
+# full-summary tag
+t_TAG_FULL_SUMMARY = r'<full-summary'
+t_TAG_FULL_SUMMARY_CLOSURE = r'</full-summary'
 
 # Tokens defined by functions:
 # ATTRIBUTES
