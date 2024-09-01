@@ -36,6 +36,8 @@ tokens = (
     'TAG_FULL_SUMMARY_CLOSURE',
     'TAG_ALSO_CALLED',
     'TAG_ALSO_CALLED_CLOSURE',
+    'TAG_SEE_REFERENCE',
+    'TAG_SEE_REFERENCE_CLOSURE',
 
     # '>' token
     'TAG_CLOSURE',
@@ -67,8 +69,6 @@ t_TAG_CLOSURE = '>'
 # The following regular expressions are used to capture text
 t_TEXT_OF_ATTRIBUTE = r'"[^"]*"' # capture text enclosed in double quotes but not including text with double inner quotation marks.
 t_TEXT_OF_TAG = r'[^<>\?"]+' # capture text that does not contain '<', '>', '"', '=' or '?'.
-# A string containing ignored characters (spaces and tabs)
-t_ignore  = ' \t'
 # language-mapped-topic tag
 t_TAG_LANGUAGE_MAPPED_TOPIC = r'<language-mapped-topic'
 t_TAG_LANGUAGE_MAPPED_TOPIC_CLOSURE = r'</language-mapped-topic'
@@ -76,6 +76,12 @@ t_TAG_LANGUAGE_MAPPED_TOPIC_CLOSURE = r'</language-mapped-topic'
 t_TAG_FULL_SUMMARY = r'<full-summary'
 t_TAG_FULL_SUMMARY_CLOSURE = r'</full-summary'
 
+# see-reference tag
+t_TAG_SEE_REFERENCE = r'<see-reference'
+t_TAG_SEE_REFERENCE_CLOSURE = r'</see-reference'
+
+# A string containing ignored characters (spaces and tabs)
+t_ignore  = ' \t'
 # Tokens defined by functions:
 # ATTRIBUTES
 # IMPORTANT: Attributes are defined as functions so that their regular expressions are called before TEXT_OF_TAG.
