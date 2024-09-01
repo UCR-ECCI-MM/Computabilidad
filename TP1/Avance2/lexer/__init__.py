@@ -1,11 +1,10 @@
-import ply.lex as lex
-
-
-# LEXER for XML file of MedilinePlus (https://medlineplus.gov/)
-# ------------------------------------------------------------
-# This module allow tokenize the data provinient of a XML  file of MedlinePlus
- # ------------------------------------------------------------
-import ply.lex as lex
+"""
+LEXER for XML file of MedilinePlus (https://medlineplus.gov/)
+------------------------------------------------------------
+This module allow tokenize the data provinient of a XML  file of MedlinePlus
+------------------------------------------------------------
+"""
+from ply import lex
 
 # List of token names
 tokens = (
@@ -23,11 +22,11 @@ tokens = (
     # Health-topic tag
     'TAG_HEALTH_TOPIC',
     'TAG_HEALTH_TOPIC_CLOSURE',
-    'ATTRIBUTE_ID', 
+    'ATTRIBUTE_ID',
     'ATTRIBUTE_DATE_CREATED',
     'ATTRIBUTE_LANGUAGE',
     'ATTRIBUTE_META_DESC',
-    'ATTRIBUTE_URL', 
+    'ATTRIBUTE_URL',
     'ATTRIBUTE_TITLE',
     # Tags under <health-topic>
     'TAG_LANGUAGE_MAPPED_TOPIC',
@@ -49,49 +48,80 @@ tokens = (
     'TEXT_OF_TAG',
 
 )
- 
+
+
+# Regular expression rules for simple tokens:
+# XML Header
+
 # Regular expression rules for simple tokens:
 # XML Header
 t_TAG_XML = r'<\?xml'
 t_XML_TAG_CLOSURE = r'\?>'
-# DOCTYPE tag
-# Note: we don't use this tag in the application, so we just create one token that will be discarted later
+
+"""
+TAG_DOCTYPE matches the top level tag.
+Note: we don't use this tag in the application, so we just create one token that
+will be discarted later.
+"""
 t_TAG_DOCTYPE = r'<\!DOCTYPE [^>]*>'
-# Health-topics tag
+
+
 t_TAG_HEALTH_TOPICS = r'<health-topics'
-# Health-topic tag
 t_TAG_HEALTH_TOPIC = r'<health-topic'
 t_TAG_HEALTH_TOPIC_CLOSURE = r'</health-topic'
-# Tags under <health-topic>
-# Also-called tag
+
+"""
+Tags under <health-topic>
+"""
 t_TAG_ALSO_CALLED = r'<also-called>'
 t_TAG_ALSO_CALLED_CLOSURE = r'</also-called>'
-# TAG closure: this token must be used when a tag had attributes that were extracted as tokens.
+
+
+"""
+TAG_CLOSURE must be used when a tag had attributes that were extracted as
+tokens.
+"""
 t_TAG_CLOSURE = '>'
-# The following regular expressions are used to capture text
-t_TEXT_OF_ATTRIBUTE = r'"[^"]*"' # capture text enclosed in double quotes but not including text with double inner quotation marks.
-t_TEXT_OF_TAG = r'[^<>\?"]+' # capture text that does not contain '<', '>', '"', '=' or '?'.
-# language-mapped-topic tag
+
+
+"""
+TEXT_OF_ATTRIBUTE matches text enclosed in double quotes,
+but not including text with nested double quotes.
+"""
+t_TEXT_OF_ATTRIBUTE = r'"[^"]*"'
+
+
+"""
+TEXT_OF_TAG matches text that does not contain '<', '>', '"', '=' or '?'.
+"""
+t_TEXT_OF_TAG = r'[^<>\?"]+'
+
+
 t_TAG_LANGUAGE_MAPPED_TOPIC = r'<language-mapped-topic'
 t_TAG_LANGUAGE_MAPPED_TOPIC_CLOSURE = r'</language-mapped-topic'
-# full-summary tag
+
 t_TAG_FULL_SUMMARY = r'<full-summary'
 t_TAG_FULL_SUMMARY_CLOSURE = r'</full-summary'
 
-# see-reference tag
 t_TAG_SEE_REFERENCE = r'<see-reference'
 t_TAG_SEE_REFERENCE_CLOSURE = r'</see-reference'
 
-# group tag
 t_TAG_GROUP = r'<group'
 t_TAG_GROUP_CLOSURE = r'</group'
 
-# A string containing ignored characters (spaces and tabs)
+"""
+t_ignore matches a string containing ignored characters (spaces and tabs)
+"""
 t_ignore  = ' \t'
-# Tokens defined by functions:
-# ATTRIBUTES
-# IMPORTANT: Attributes are defined as functions so that their regular expressions are called before TEXT_OF_TAG.
-# XML Header
+
+
+"""
+The following are Tokens defined by functions.
+
+IMPORTANT: Attributes are defined as functions so that their regular expressions
+are called before TEXT_OF_TAG.
+"""
+
 def t_ATTRIBUTE_VERSION(t):
     r'version='
     return t
@@ -100,7 +130,6 @@ def t_ATTRIBUTE_ENCODING(t):
     r'encoding='
     return t
 
-# Health-topics tag
 def t_ATTRIBUTE_TOTAL(t):
     r'total='
     return t
@@ -108,7 +137,10 @@ def t_ATTRIBUTE_TOTAL(t):
 def t_ATTRIBUTE_DATE_GENERATED(t):
     r'date-generated='
     return t
- 
+
+
+# Health-topic tag
+
 # Health-topic tag
 def t_ATTRIBUTE_ID(t):
     r'id='
@@ -126,35 +158,39 @@ def t_ATTRIBUTE_META_DESC(t):
     r'meta-desc='
     return t
 
-def t_ATTRIBUTE_URL(t): 
+def t_ATTRIBUTE_URL(t):
     r'url='
     return t
 
 def t_ATTRIBUTE_TITLE(t):
     r'title='
     return t
- 
+
+
+# Define a rule so we can track line numbers
+
 # Define a rule so we can track line numbers
 def t_newline(t):
-     r'\n+'
-     t.lexer.lineno += len(t.value)
+    """Define a rule so we can track line numbers"""
+    r'\n+'
+    t.lexer.lineno += len(t.value)
 
-# Error handling rule
 def t_error(t):
-     print("Illegal character '%s'" % t.value[0])
-     t.lexer.skip(1)
- 
-# Tokenize the input string and print each token
+    """Error handling rule"""
+    print(f"Illegal character '{str(t.value[0])}'")
+    t.lexer.skip(1)
+
 def tokenize(data):
-# Build the lexer
+    """Tokenize the input string and print each token."""
+    # Build the lexer
     lexer = lex.lex()
 
     # Give the lexer some input
     lexer.input(data)
-    
+
     # Tokenize
     while True:
         tok = lexer.token()
-        if not tok: 
+        if not tok:
             break      # No more input
         print(tok)
