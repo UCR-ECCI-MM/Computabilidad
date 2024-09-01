@@ -6,7 +6,7 @@ import ply.lex as lex
 # This module allow tokenize the data provinient of a XML  file of MedlinePlus
  # ------------------------------------------------------------
 import ply.lex as lex
- 
+
 # List of token names
 tokens = (
     # XML Header
@@ -30,6 +30,8 @@ tokens = (
     'ATTRIBUTE_URL', 
     'ATTRIBUTE_TITLE',
     # Tags under <health-topic>
+    'TAG_LANGUAGE_MAPPED_TOPIC',
+    'TAG_LANGUAGE_MAPPED_TOPIC_CLOSURE',
     'TAG_ALSO_CALLED',
     'TAG_ALSO_CALLED_CLOSURE',
 
@@ -39,6 +41,7 @@ tokens = (
     # Tokens corresponding to texts
     'TEXT_OF_ATTRIBUTE',
     'TEXT_OF_TAG',
+
 )
  
 # Regular expression rules for simple tokens:
@@ -57,13 +60,16 @@ t_TAG_HEALTH_TOPIC_CLOSURE = r'</health-topic'
 # Also-called tag
 t_TAG_ALSO_CALLED = r'<also-called>'
 t_TAG_ALSO_CALLED_CLOSURE = r'</also-called>'
-# TAG closure: this token is use when the tag has attribute that were extracted as tokens. 
+# TAG closure: this token must be used when a tag had attributes that were extracted as tokens.
 t_TAG_CLOSURE = '>'
 # The following regular expressions are used to capture text
 t_TEXT_OF_ATTRIBUTE = r'"[^"]*"' # capture text enclosed in double quotes but not including text with double inner quotation marks.
 t_TEXT_OF_TAG = r'[^<>\?"]+' # capture text that does not contain '<', '>', '"', '=' or '?'.
 # A string containing ignored characters (spaces and tabs)
 t_ignore  = ' \t'
+# language-mapped-topic tag
+t_TAG_LANGUAGE_MAPPED_TOPIC = r'<language-mapped-topic'
+t_TAG_LANGUAGE_MAPPED_TOPIC_CLOSURE = r'</language-mapped-topic'
 
 # Tokens defined by functions:
 # ATTRIBUTES
