@@ -38,6 +38,8 @@ tokens = (
     'TAG_ALSO_CALLED_CLOSURE',
     'TAG_SEE_REFERENCE',
     'TAG_SEE_REFERENCE_CLOSURE',
+    'TAG_GROUP',
+    'TAG_GROUP_CLOSURE',
 
     # '>' token
     'TAG_CLOSURE',
@@ -79,6 +81,10 @@ t_TAG_FULL_SUMMARY_CLOSURE = r'</full-summary'
 # see-reference tag
 t_TAG_SEE_REFERENCE = r'<see-reference'
 t_TAG_SEE_REFERENCE_CLOSURE = r'</see-reference'
+
+# group tag
+t_TAG_GROUP = r'<group'
+t_TAG_GROUP_CLOSURE = r'</group'
 
 # A string containing ignored characters (spaces and tabs)
 t_ignore  = ' \t'
