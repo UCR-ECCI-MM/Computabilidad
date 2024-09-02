@@ -40,6 +40,12 @@ tokens = (
     'TAG_GROUP',
     'TAG_GROUP_CLOSURE',
 
+    # MeSH Heading tags
+    'TAG_MESH_HEADING',
+    'TAG_MESH_HEADING_CLOSURE',
+    'TAG_DESCRIPTOR_ID',
+    'TAG_DESCRIPTOR_ID_CLOSURE',
+
     # '>' token
     'TAG_CLOSURE',
 
@@ -69,6 +75,12 @@ t_TAG_DOCTYPE = r'<\!DOCTYPE [^>]*>'
 t_TAG_HEALTH_TOPICS = r'<health-topics'
 t_TAG_HEALTH_TOPIC = r'<health-topic'
 t_TAG_HEALTH_TOPIC_CLOSURE = r'</health-topic'
+
+# Regular expression rules for MeSH Heading tags
+t_TAG_MESH_HEADING = r'<mesh-heading>'
+t_TAG_MESH_HEADING_CLOSURE = r'</mesh-heading>'
+t_TAG_DESCRIPTOR_ID = r'<descriptor id=>'
+t_TAG_DESCRIPTOR_ID_CLOSURE = r'</descriptor>'
 
 """
 Tags under <health-topic>
@@ -109,11 +121,6 @@ t_TAG_SEE_REFERENCE_CLOSURE = r'</see-reference'
 t_TAG_GROUP = r'<group'
 t_TAG_GROUP_CLOSURE = r'</group'
 
-"""
-t_ignore matches a string containing ignored characters (spaces and tabs)
-"""
-t_ignore  = ' \t'
-
 
 """
 The following are Tokens defined by functions.
@@ -137,9 +144,6 @@ def t_ATTRIBUTE_TOTAL(t):
 def t_ATTRIBUTE_DATE_GENERATED(t):
     r'date-generated='
     return t
-
-
-# Health-topic tag
 
 # Health-topic tag
 def t_ATTRIBUTE_ID(t):
@@ -166,14 +170,18 @@ def t_ATTRIBUTE_TITLE(t):
     r'title='
     return t
 
-
 # Define a rule so we can track line numbers
 
 # Define a rule so we can track line numbers
 def t_newline(t):
-    """Define a rule so we can track line numbers"""
     r'\n+'
     t.lexer.lineno += len(t.value)
+
+# A string containing ignored characters (spaces and tabs)
+"""
+t_ignore matches a string containing ignored characters (spaces and tabs)
+"""
+t_ignore  = ' \t'
 
 def t_error(t):
     """Error handling rule"""
