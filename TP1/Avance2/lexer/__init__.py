@@ -55,18 +55,17 @@ tokens = (
     'TAG_OTHER_LANGUAGE_CLOSURE',
     'ATTRIBUTE_VERNACULAR_NAME',
 
+    # Primary institute
+    'TAG_PRIMARY_INSTITUTE',
+    'TAG_PRIMARY_INSTITUTE_CLOSURE',
+
     # '>' token
     'TAG_CLOSURE',
 
     # Tokens corresponding to texts
     'TEXT_OF_ATTRIBUTE',
     'TEXT_OF_TAG',
-
 )
-
-
-# Regular expression rules for simple tokens:
-# XML Header
 
 # Regular expression rules for simple tokens:
 # XML Header
@@ -98,6 +97,10 @@ t_TAG_RELATED_TOPIC_CLOSURE = r'</related-topic>'
 # Regular expression rules for Other language tags
 t_TAG_OTHER_LANGUAGE = r'<other-language'
 t_TAG_OTHER_LANGUAGE_CLOSURE = r'</other-language>'
+
+# Regular expression rules for Primary institute tags
+t_TAG_PRIMARY_INSTITUTE = r'<primary-institute'
+t_TAG_PRIMARY_INSTITUTE_CLOSURE = r'</primary-institute>'
 
 """
 Tags under <health-topic>
