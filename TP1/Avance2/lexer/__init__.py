@@ -17,6 +17,7 @@ tokens = (
     'TAG_DOCTYPE',
     # Health-topics tag
     'TAG_HEALTH_TOPICS',
+    'TAG_HEALTH_TOPICS_CLOSURE',
     'ATTRIBUTE_TOTAL',
     'ATTRIBUTE_DATE_GENERATED',
     # Health-topic tag
@@ -90,10 +91,11 @@ will be discarted later.
 """
 t_TAG_DOCTYPE = r'<\!DOCTYPE [^>]*>'
 
-
+# Regular expression rules for Health topic and Health topics tags
 t_TAG_HEALTH_TOPICS = r'<health-topics'
+t_TAG_HEALTH_TOPICS_CLOSURE = r'</health-topics>'
 t_TAG_HEALTH_TOPIC = r'<health-topic'
-t_TAG_HEALTH_TOPIC_CLOSURE = r'</health-topic'
+t_TAG_HEALTH_TOPIC_CLOSURE = r'</health-topic>'
 
 # Regular expression rules for Mesh heading tags
 t_TAG_MESH_HEADING = r'<mesh-heading>'
