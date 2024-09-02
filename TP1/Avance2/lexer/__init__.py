@@ -55,9 +55,20 @@ tokens = (
     'TAG_OTHER_LANGUAGE_CLOSURE',
     'ATTRIBUTE_VERNACULAR_NAME',
 
-    # Primary institute
+    # Primary institute tags
     'TAG_PRIMARY_INSTITUTE',
     'TAG_PRIMARY_INSTITUTE_CLOSURE',
+
+    # Site tags
+    'TAG_SITE',
+    'TAG_SITE_CLOSURE',
+    'TAG_INFORMATION_CATEGORY',
+    'TAG_INFORMATION_CATEGORY_CLOSURE',
+    'TAG_ORGANIZATION',
+    'TAG_ORGANIZATION_CLOSURE',
+    'TAG_STANDARD_DESCRIPTION',
+    'TAG_STANDARD_DESCRIPTION_CLOSURE',
+    'ATTRIBUTE_LANGUAGE_MAPPED_URL',
 
     # '>' token
     'TAG_CLOSURE',
@@ -101,6 +112,16 @@ t_TAG_OTHER_LANGUAGE_CLOSURE = r'</other-language>'
 # Regular expression rules for Primary institute tags
 t_TAG_PRIMARY_INSTITUTE = r'<primary-institute'
 t_TAG_PRIMARY_INSTITUTE_CLOSURE = r'</primary-institute>'
+
+# Regular expression rules for Site tags
+t_TAG_SITE = r'<site'
+t_TAG_SITE_CLOSURE = r'</site>'
+t_TAG_INFORMATION_CATEGORY = r'<information-category>'
+t_TAG_INFORMATION_CATEGORY_CLOSURE = r'</information-category>'
+t_TAG_ORGANIZATION = r'<organization>'
+t_TAG_ORGANIZATION_CLOSURE = r'</organization>'
+t_TAG_STANDARD_DESCRIPTION = r'<standard-description>'
+t_TAG_STANDARD_DESCRIPTION_CLOSURE = r'</standard-description>'
 
 """
 Tags under <health-topic>
@@ -193,6 +214,11 @@ def t_ATTRIBUTE_TITLE(t):
 # Other language tags
 def t_ATTRIBUTE_VERNACULAR_NAME(t):
     r'vernacular-name='
+    return t
+
+# Site tags
+def t_ATTRIBUTE_LANGUAGE_MAPPED_URL(t):
+    r'language-mapped-url='
     return t
 
 # Define a rule so we can track line numbers
