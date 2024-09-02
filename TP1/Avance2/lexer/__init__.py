@@ -40,11 +40,15 @@ tokens = (
     'TAG_GROUP',
     'TAG_GROUP_CLOSURE',
 
-    # MeSH Heading tags
+    # Mesh heading tags
     'TAG_MESH_HEADING',
     'TAG_MESH_HEADING_CLOSURE',
     'TAG_DESCRIPTOR_ID',
     'TAG_DESCRIPTOR_ID_CLOSURE',
+
+    # Related topic tags
+    'TAG_RELATED_TOPIC',
+    'TAG_RELATED_TOPIC_CLOSURE',
 
     # '>' token
     'TAG_CLOSURE',
@@ -76,11 +80,15 @@ t_TAG_HEALTH_TOPICS = r'<health-topics'
 t_TAG_HEALTH_TOPIC = r'<health-topic'
 t_TAG_HEALTH_TOPIC_CLOSURE = r'</health-topic'
 
-# Regular expression rules for MeSH Heading tags
+# Regular expression rules for Mesh heading tags
 t_TAG_MESH_HEADING = r'<mesh-heading>'
 t_TAG_MESH_HEADING_CLOSURE = r'</mesh-heading>'
 t_TAG_DESCRIPTOR_ID = r'<descriptor id=>'
 t_TAG_DESCRIPTOR_ID_CLOSURE = r'</descriptor>'
+
+# Regular expression rules for Related topic tags
+t_TAG_RELATED_TOPIC = r'<related-topic'
+t_TAG_RELATED_TOPIC_CLOSURE = r'</related-topic>'
 
 """
 Tags under <health-topic>
