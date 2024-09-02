@@ -8,18 +8,22 @@ from ply import lex
 
 # List of token names
 tokens = (
+
     # XML Header
     'TAG_XML',
     'XML_TAG_CLOSURE',
     'ATTRIBUTE_VERSION',
     'ATTRIBUTE_ENCODING',
+
     # DOCTYPE tag
     'TAG_DOCTYPE',
+
     # Health-topics tag
     'TAG_HEALTH_TOPICS',
     'TAG_HEALTH_TOPICS_CLOSURE',
     'ATTRIBUTE_TOTAL',
     'ATTRIBUTE_DATE_GENERATED',
+
     # Health-topic tag
     'TAG_HEALTH_TOPIC',
     'TAG_HEALTH_TOPIC_CLOSURE',
@@ -29,6 +33,7 @@ tokens = (
     'ATTRIBUTE_META_DESC',
     'ATTRIBUTE_URL',
     'ATTRIBUTE_TITLE',
+
     # Tags under <health-topic>
     'TAG_LANGUAGE_MAPPED_TOPIC',
     'TAG_LANGUAGE_MAPPED_TOPIC_CLOSURE',
@@ -70,6 +75,21 @@ tokens = (
     'TAG_STANDARD_DESCRIPTION',
     'TAG_STANDARD_DESCRIPTION_CLOSURE',
     'ATTRIBUTE_LANGUAGE_MAPPED_URL',
+
+    # HTML tags
+    'TAG_P',
+    'TAG_P_CLOSURE',
+    'ATTRIBUTE_CLASS',
+    'TAG_UL',
+    'TAG_UL_CLOSURE',
+    'TAG_LI',
+    'TAG_LI_CLOSURE',
+    'TAG_A_HREF',
+    'TAG_A_HREF_CLOSURE',
+    'TAG_H3',
+    'TAG_H3_CLOSURE',
+    'TAG_STRONG',
+    'TAG_STRONG_CLOSURE',
 
     # '>' token
     'TAG_CLOSURE',
@@ -131,13 +151,11 @@ Tags under <health-topic>
 t_TAG_ALSO_CALLED = r'<also-called>'
 t_TAG_ALSO_CALLED_CLOSURE = r'</also-called>'
 
-
 """
 TAG_CLOSURE must be used when a tag had attributes that were extracted as
 tokens.
 """
 t_TAG_CLOSURE = '>'
-
 
 """
 TEXT_OF_ATTRIBUTE matches text enclosed in double quotes,
@@ -145,25 +163,40 @@ but not including text with nested double quotes.
 """
 t_TEXT_OF_ATTRIBUTE = r'"[^"]*"'
 
-
 """
 TEXT_OF_TAG matches text that does not contain '<', '>', '"', '=' or '?'.
 """
-t_TEXT_OF_TAG = r'[^<>\?"]+'
+t_TEXT_OF_TAG = r'[^<>(\?>)"]+'
 
-
+# Regular expression rules for Language mapped topic tags
 t_TAG_LANGUAGE_MAPPED_TOPIC = r'<language-mapped-topic'
 t_TAG_LANGUAGE_MAPPED_TOPIC_CLOSURE = r'</language-mapped-topic'
 
+# Regular expression rules for Full summary tags
 t_TAG_FULL_SUMMARY = r'<full-summary'
 t_TAG_FULL_SUMMARY_CLOSURE = r'</full-summary'
 
+# HTML's tags
+t_TAG_P = r'<p'
+t_TAG_P_CLOSURE = r'</p>'
+t_TAG_UL = r'<ul>'
+t_TAG_UL_CLOSURE = r'</ul>'
+t_TAG_LI = r'<li>'
+t_TAG_LI_CLOSURE = r'</li>'
+t_TAG_A_HREF = r'<a href='
+t_TAG_A_HREF_CLOSURE = r'</a>'
+t_TAG_H3 = r'<h3>'
+t_TAG_H3_CLOSURE = r'</h3>'
+t_TAG_STRONG =  r'<strong>'
+t_TAG_STRONG_CLOSURE = r'</strong>'
+
+# Regular expression rules for See reference tags
 t_TAG_SEE_REFERENCE = r'<see-reference'
 t_TAG_SEE_REFERENCE_CLOSURE = r'</see-reference'
 
+# Regular expression rules for Group tags
 t_TAG_GROUP = r'<group'
 t_TAG_GROUP_CLOSURE = r'</group'
-
 
 """
 The following are Tokens defined by functions.
@@ -223,6 +256,11 @@ def t_ATTRIBUTE_LANGUAGE_MAPPED_URL(t):
     r'language-mapped-url='
     return t
 
+# HTML's tags
+def t_ATTRIBUTE_CLASS(t):
+    r'class='
+    return t
+
 # Define a rule so we can track line numbers
 def t_newline(t):
     r'\n+'
@@ -251,5 +289,6 @@ def tokenize(data):
     while True:
         tok = lexer.token()
         if not tok:
-            break      # No more input
+            # No more input
+            break     
         print(tok)
