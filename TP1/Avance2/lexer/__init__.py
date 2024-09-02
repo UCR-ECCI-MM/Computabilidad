@@ -43,12 +43,17 @@ tokens = (
     # Mesh heading tags
     'TAG_MESH_HEADING',
     'TAG_MESH_HEADING_CLOSURE',
-    'TAG_DESCRIPTOR_ID',
-    'TAG_DESCRIPTOR_ID_CLOSURE',
+    'TAG_DESCRIPTOR',
+    'TAG_DESCRIPTOR_CLOSURE',
 
     # Related topic tags
     'TAG_RELATED_TOPIC',
     'TAG_RELATED_TOPIC_CLOSURE',
+
+    # Other language tags
+    'TAG_OTHER_LANGUAGE',
+    'TAG_OTHER_LANGUAGE_CLOSURE',
+    'ATTRIBUTE_VERNACULAR_NAME',
 
     # '>' token
     'TAG_CLOSURE',
@@ -83,12 +88,16 @@ t_TAG_HEALTH_TOPIC_CLOSURE = r'</health-topic'
 # Regular expression rules for Mesh heading tags
 t_TAG_MESH_HEADING = r'<mesh-heading>'
 t_TAG_MESH_HEADING_CLOSURE = r'</mesh-heading>'
-t_TAG_DESCRIPTOR_ID = r'<descriptor id=>'
-t_TAG_DESCRIPTOR_ID_CLOSURE = r'</descriptor>'
+t_TAG_DESCRIPTOR = r'<descriptor'
+t_TAG_DESCRIPTOR_CLOSURE = r'</descriptor>'
 
 # Regular expression rules for Related topic tags
 t_TAG_RELATED_TOPIC = r'<related-topic'
 t_TAG_RELATED_TOPIC_CLOSURE = r'</related-topic>'
+
+# Regular expression rules for Other language tags
+t_TAG_OTHER_LANGUAGE = r'<other-language'
+t_TAG_OTHER_LANGUAGE_CLOSURE = r'</other-language>'
 
 """
 Tags under <health-topic>
@@ -178,7 +187,10 @@ def t_ATTRIBUTE_TITLE(t):
     r'title='
     return t
 
-# Define a rule so we can track line numbers
+# Other language tags
+def t_ATTRIBUTE_VERNACULAR_NAME(t):
+    r'vernacular-name='
+    return t
 
 # Define a rule so we can track line numbers
 def t_newline(t):
