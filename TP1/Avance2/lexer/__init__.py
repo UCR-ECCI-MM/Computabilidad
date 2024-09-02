@@ -51,6 +51,8 @@ tokens = (
     'TAG_MESH_HEADING_CLOSURE',
     'TAG_DESCRIPTOR',
     'TAG_DESCRIPTOR_CLOSURE',
+    'TAG_QUALIFIER', 
+    'TAG_QUALIFIER_CLOSURE',
 
     # Related topic tags
     'TAG_RELATED_TOPIC',
@@ -84,12 +86,43 @@ tokens = (
     'TAG_UL_CLOSURE',
     'TAG_LI',
     'TAG_LI_CLOSURE',
-    'TAG_A_HREF',
-    'TAG_A_HREF_CLOSURE',
-    'TAG_H3',
-    'TAG_H3_CLOSURE',
+    'TAG_A',
+    'TAG_A_CLOSURE',
+    'ATTRIBUTE_HREF', 
+    'TAG_H1_4',
+    'TAG_H1_4_CLOSURE',
     'TAG_STRONG',
     'TAG_STRONG_CLOSURE',
+    'TAG_TD',
+    'TAG_TD_CLOSURE',
+    'TAG_TR',
+    'TAG_TR_CLOSURE',
+    'TAG_BR',
+    'TAG_I',
+    'TAG_I_CLOSURE',
+    'TAG_EM',
+    'TAG_EM_CLOSURE',
+    'TAG_B',
+    'TAG_B_CLOSURE',
+    'TAG_TABLE',
+    'TAG_TABLE_CLOSURE',
+    'ATTRIBUTE_BORDER',
+    'TAG_THEAD',
+    'TAG_THEAD_CLOSURE',
+    'TAG_TH',
+    'TAG_TH_CLOSURE',
+    'ATTRIBUTE_COLSPAN',
+    'TAG_TBODY',
+    'TAG_TBODY_CLOSURE',
+    'TAG_TOPIC',
+    'TAG_TOPIC_CLOSURE',
+    'ATTRIBUTE_LINKTEXT',
+    'TAG_COMMENT',
+    'TAG_COMMENT_CLOSURE',
+    'TAG_IMAGE',
+    'TAG_IMAGE_CLOSURE',
+    'ATTRIBUTE_SRC',
+    'TAG_STYLE',
 
     # '>' token
     'TAG_CLOSURE',
@@ -122,6 +155,8 @@ t_TAG_MESH_HEADING = r'<mesh-heading>'
 t_TAG_MESH_HEADING_CLOSURE = r'</mesh-heading>'
 t_TAG_DESCRIPTOR = r'<descriptor'
 t_TAG_DESCRIPTOR_CLOSURE = r'</descriptor>'
+t_TAG_QUALIFIER = r'<qualifier'
+t_TAG_QUALIFIER_CLOSURE = r'</qualifier>'
 
 # Regular expression rules for Related topic tags
 t_TAG_RELATED_TOPIC = r'<related-topic'
@@ -164,9 +199,10 @@ but not including text with nested double quotes.
 t_TEXT_OF_ATTRIBUTE = r'"[^"]*"'
 
 """
-TEXT_OF_TAG matches text that does not contain '<', '>', '"', '=' or '?'.
+TEXT_OF_TAG matches text that does not contain '<', '>', '"', '=' or '?>'.
 """
-t_TEXT_OF_TAG = r'[^<>(\?>)"]+'
+t_TEXT_OF_TAG = r'(?!\?>)[^<>"]+'
+
 
 # Regular expression rules for Language mapped topic tags
 t_TAG_LANGUAGE_MAPPED_TOPIC = r'<language-mapped-topic'
@@ -183,12 +219,39 @@ t_TAG_UL = r'<ul>'
 t_TAG_UL_CLOSURE = r'</ul>'
 t_TAG_LI = r'<li>'
 t_TAG_LI_CLOSURE = r'</li>'
-t_TAG_A_HREF = r'<a href='
-t_TAG_A_HREF_CLOSURE = r'</a>'
-t_TAG_H3 = r'<h3>'
-t_TAG_H3_CLOSURE = r'</h3>'
+t_TAG_A = r'<a'
+t_TAG_A_CLOSURE = r'</a>'
+t_TAG_H1_4 = r'<h[1-4]>'
+t_TAG_H1_4_CLOSURE = r'</h[1-4]>'
 t_TAG_STRONG =  r'<strong>'
 t_TAG_STRONG_CLOSURE = r'</strong>'
+t_TAG_TD = r'<td'
+t_TAG_TD_CLOSURE = r'</td>'
+t_TAG_TR = r'<tr'
+t_TAG_TR_CLOSURE = r'</tr>'
+t_TAG_BR = r'<br/>'
+t_TAG_I_CLOSURE = r'<i>'
+t_TAG_I = r'</i>'
+t_TAG_EM = r'<em>'
+t_TAG_EM_CLOSURE = r'</em>'
+t_TAG_B = r'<b>'
+t_TAG_B_CLOSURE = r'</b>'
+t_TAG_TABLE = r'<table'
+t_TAG_TABLE_CLOSURE = r'</table>'
+t_TAG_THEAD = r'<thead>'
+t_TAG_THEAD_CLOSURE = r'</thead>'
+t_TAG_TH = r'<th'
+t_TAG_TH_CLOSURE = r'</th>'
+t_TAG_TBODY = r'<tbody>'
+t_TAG_TBODY_CLOSURE = r'</tbody>'
+t_TAG_TOPIC = r'<topic'
+t_TAG_TOPIC_CLOSURE = r'</topic'
+t_TAG_COMMENT = r'<!--'
+t_TAG_COMMENT_CLOSURE = r'-->'
+t_TAG_IMAGE = r'<img'
+t_TAG_IMAGE_CLOSURE = r'/>'
+t_TAG_STYLE = r'<style(.*?)</style> '
+
 
 # Regular expression rules for See reference tags
 t_TAG_SEE_REFERENCE = r'<see-reference'
@@ -223,7 +286,7 @@ def t_ATTRIBUTE_DATE_GENERATED(t):
 
 # Health-topic tag
 def t_ATTRIBUTE_ID(t):
-    r'id='
+    r'(?i)id='
     return t
 
 def t_ATTRIBUTE_DATE_CREATED(t):
@@ -261,6 +324,26 @@ def t_ATTRIBUTE_CLASS(t):
     r'class='
     return t
 
+def t_ATTRIBUTE_HREF(t):
+    r'href='
+    return t
+
+def t_ATTRIBUTE_BORDER(t):
+    r'border='
+    return t
+
+def t_ATTRIBUTE_COLSPAN(t):
+    r'colspan='
+    return t
+
+def t_ATTRIBUTE_LINKTEXT(t):
+    r'(?i)linktext='
+    return t
+
+def t_ATTRIBUTE_SRC(t):
+    r'src='
+    return t
+
 # Define a rule so we can track line numbers
 def t_newline(t):
     r'\n+'
@@ -274,7 +357,9 @@ t_ignore  = ' \t'
 
 def t_error(t):
     """Error handling rule"""
+    print("*****ERROR*****")
     print(f"Illegal character '{str(t.value[0])}'")
+    caracter = input("Press a Key to continue: ")
     t.lexer.skip(1)
 
 def tokenize(data):
