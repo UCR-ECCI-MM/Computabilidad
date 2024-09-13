@@ -78,52 +78,6 @@ tokens = (
     'TAG_STANDARD_DESCRIPTION_CLOSURE',
     'ATTRIBUTE_LANGUAGE_MAPPED_URL',
 
-    # HTML tags
-    'TAG_P',
-    'TAG_P_CLOSURE',
-    'ATTRIBUTE_CLASS',
-    'TAG_UL',
-    'TAG_UL_CLOSURE',
-    'TAG_LI',
-    'TAG_LI_CLOSURE',
-    'TAG_A',
-    'TAG_A_CLOSURE',
-    'ATTRIBUTE_HREF', 
-    'TAG_H1_4',
-    'TAG_H1_4_CLOSURE',
-    'TAG_STRONG',
-    'TAG_STRONG_CLOSURE',
-    'TAG_TD',
-    'TAG_TD_CLOSURE',
-    'TAG_TR',
-    'TAG_TR_CLOSURE',
-    'TAG_BR',
-    'TAG_I',
-    'TAG_I_CLOSURE',
-    'TAG_EM',
-    'TAG_EM_CLOSURE',
-    'TAG_B',
-    'TAG_B_CLOSURE',
-    'TAG_TABLE',
-    'TAG_TABLE_CLOSURE',
-    'ATTRIBUTE_BORDER',
-    'TAG_THEAD',
-    'TAG_THEAD_CLOSURE',
-    'TAG_TH',
-    'TAG_TH_CLOSURE',
-    'ATTRIBUTE_COLSPAN',
-    'TAG_TBODY',
-    'TAG_TBODY_CLOSURE',
-    'TAG_TOPIC',
-    'TAG_TOPIC_CLOSURE',
-    'ATTRIBUTE_LINKTEXT',
-    'TAG_COMMENT',
-    'TAG_COMMENT_CLOSURE',
-    'TAG_IMAGE',
-    'TAG_IMAGE_CLOSURE',
-    'ATTRIBUTE_SRC',
-    'TAG_STYLE',
-
     # '>' token
     'TAG_CLOSURE',
 
@@ -208,50 +162,6 @@ t_TEXT_OF_TAG = r'(?!\?>)[^<>"]+'
 t_TAG_LANGUAGE_MAPPED_TOPIC = r'<language-mapped-topic'
 t_TAG_LANGUAGE_MAPPED_TOPIC_CLOSURE = r'</language-mapped-topic'
 
-# Regular expression rules for Full summary tags
-t_TAG_FULL_SUMMARY = r'<full-summary'
-t_TAG_FULL_SUMMARY_CLOSURE = r'</full-summary'
-
-# HTML's tags
-t_TAG_P = r'<p'
-t_TAG_P_CLOSURE = r'</p>'
-t_TAG_UL = r'<ul>'
-t_TAG_UL_CLOSURE = r'</ul>'
-t_TAG_LI = r'<li>'
-t_TAG_LI_CLOSURE = r'</li>'
-t_TAG_A = r'<a'
-t_TAG_A_CLOSURE = r'</a>'
-t_TAG_H1_4 = r'<h[1-4]>'
-t_TAG_H1_4_CLOSURE = r'</h[1-4]>'
-t_TAG_STRONG =  r'<strong>'
-t_TAG_STRONG_CLOSURE = r'</strong>'
-t_TAG_TD = r'<td'
-t_TAG_TD_CLOSURE = r'</td>'
-t_TAG_TR = r'<tr'
-t_TAG_TR_CLOSURE = r'</tr>'
-t_TAG_BR = r'<br/>'
-t_TAG_I_CLOSURE = r'<i>'
-t_TAG_I = r'</i>'
-t_TAG_EM = r'<em>'
-t_TAG_EM_CLOSURE = r'</em>'
-t_TAG_B = r'<b>'
-t_TAG_B_CLOSURE = r'</b>'
-t_TAG_TABLE = r'<table'
-t_TAG_TABLE_CLOSURE = r'</table>'
-t_TAG_THEAD = r'<thead>'
-t_TAG_THEAD_CLOSURE = r'</thead>'
-t_TAG_TH = r'<th'
-t_TAG_TH_CLOSURE = r'</th>'
-t_TAG_TBODY = r'<tbody>'
-t_TAG_TBODY_CLOSURE = r'</tbody>'
-t_TAG_TOPIC = r'<topic'
-t_TAG_TOPIC_CLOSURE = r'</topic'
-t_TAG_COMMENT = r'<!--'
-t_TAG_COMMENT_CLOSURE = r'-->'
-t_TAG_IMAGE = r'<img'
-t_TAG_IMAGE_CLOSURE = r'/>'
-t_TAG_STYLE = r'<style(.*?)</style> '
-
 
 # Regular expression rules for See reference tags
 t_TAG_SEE_REFERENCE = r'<see-reference'
@@ -267,6 +177,15 @@ The following are Tokens defined by functions.
 IMPORTANT: Attributes are defined as functions so that their regular expressions
 are called before TEXT_OF_TAG.
 """
+
+"""
+TAG_FULL_SUMMARY matches and extract text content between <full-summary> and </full-summary>.
+"""
+def t_TAG_FULL_SUMMARY(t):
+    r'<full-summary>([\s\S]*?)</full-summary>'
+    t.value = t.value[14:-15]
+    return t
+
 
 def t_ATTRIBUTE_VERSION(t):
     r'version='
@@ -317,31 +236,6 @@ def t_ATTRIBUTE_VERNACULAR_NAME(t):
 # Site tags
 def t_ATTRIBUTE_LANGUAGE_MAPPED_URL(t):
     r'language-mapped-url='
-    return t
-
-# HTML's tags
-def t_ATTRIBUTE_CLASS(t):
-    r'class='
-    return t
-
-def t_ATTRIBUTE_HREF(t):
-    r'href='
-    return t
-
-def t_ATTRIBUTE_BORDER(t):
-    r'border='
-    return t
-
-def t_ATTRIBUTE_COLSPAN(t):
-    r'colspan='
-    return t
-
-def t_ATTRIBUTE_LINKTEXT(t):
-    r'(?i)linktext='
-    return t
-
-def t_ATTRIBUTE_SRC(t):
-    r'src='
     return t
 
 # Define a rule so we can track line numbers
