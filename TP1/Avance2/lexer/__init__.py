@@ -80,6 +80,16 @@ tokens = (
 
     # '>' token
     'TAG_CLOSURE',
+    
+    # Token corresponding to numbers
+    'NUMBER',
+    
+    # Token corresponding to URL
+    'URL',
+    
+    # Tokens corresponding to date and time
+    'DATE',
+    'TIME',
 
     # Tokens corresponding to texts
     'TEXT_OF_ATTRIBUTE',
@@ -146,17 +156,6 @@ tokens.
 """
 t_TAG_CLOSURE = '>'
 
-"""
-TEXT_OF_ATTRIBUTE matches text enclosed in double quotes,
-but not including text with nested double quotes.
-"""
-t_TEXT_OF_ATTRIBUTE = r'"[^"]*"'
-
-"""
-TEXT_OF_TAG matches text that does not contain '<', '>', '"', '=' or '?>'.
-"""
-t_TEXT_OF_TAG = r'(?!\?>)[^<>"]+'
-
 
 # Regular expression rules for Language mapped topic tags
 t_TAG_LANGUAGE_MAPPED_TOPIC = r'<language-mapped-topic'
@@ -166,6 +165,7 @@ t_TAG_LANGUAGE_MAPPED_TOPIC_CLOSURE = r'</language-mapped-topic'
 # Regular expression rules for See reference tags
 t_TAG_SEE_REFERENCE = r'<see-reference'
 t_TAG_SEE_REFERENCE_CLOSURE = r'</see-reference'
+
 
 # Regular expression rules for Group tags
 t_TAG_GROUP = r'<group'
@@ -178,14 +178,31 @@ IMPORTANT: Attributes are defined as functions so that their regular expressions
 are called before TEXT_OF_TAG.
 """
 
-"""
-TAG_FULL_SUMMARY matches and extract text content between <full-summary> and </full-summary>.
-"""
 def t_TAG_FULL_SUMMARY(t):
     r'<full-summary>([\s\S]*?)</full-summary>'
+    """
+    TAG_FULL_SUMMARY matches and extract text content between <full-summary> and </full-summary>.
+    """
     t.value = t.value[14:-15]
     return t
 
+def t_NUMBER(t):
+    r'"\d+"'
+    t.value = int(t.value[1:-1]) # remove double quotes
+    return t
+
+def t_URL(t):
+    r'"(https|http)://[a-zA-Z0-9\.-]+(/[^"\s]*)?"'
+    return t
+
+def t_DATE(t):
+    r'"(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/[0-9]{4}["\b]'
+    return t
+
+def t_TIME(t):
+    r'([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])"'
+    t.value = t.value[:-1] # remove double quote
+    return t
 
 def t_ATTRIBUTE_VERSION(t):
     r'version='
@@ -238,6 +255,21 @@ def t_ATTRIBUTE_LANGUAGE_MAPPED_URL(t):
     r'language-mapped-url='
     return t
 
+""" NOTE: the current PLY version considers the order of the token declaration in the regex evaluation,
+ even when it is a simply declaration. So, text tokens are declared last to avoid problems with
+ the evaluation order. 
+"""
+"""
+TEXT_OF_ATTRIBUTE matches text enclosed in double quotes,
+but not including text with nested double quotes.
+"""
+t_TEXT_OF_ATTRIBUTE = r'"[^"]*"'
+
+"""
+TEXT_OF_TAG matches text that does not contain '<', '>', '"', '=' or '?>'.
+"""
+t_TEXT_OF_TAG = r'(?!\?>)[^<>"]+'
+
 # Define a rule so we can track line numbers
 def t_newline(t):
     r'\n+'
@@ -253,7 +285,7 @@ def t_error(t):
     """Error handling rule"""
     print("*****ERROR*****")
     print(f"Illegal character '{str(t.value[0])}'")
-    caracter = input("Press a Key to continue: ")
+    character = input("Press a Key to continue: ")
     t.lexer.skip(1)
 
 def tokenize(data):
@@ -271,3 +303,4 @@ def tokenize(data):
             # No more input
             break     
         print(tok)
+        
