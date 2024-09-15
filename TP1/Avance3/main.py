@@ -3,7 +3,6 @@
 This module is the starting point of the whole application.
 ------------------------------------------------------------
 """
-from lexer import tokenize
 from parser import parser
 
 def main():

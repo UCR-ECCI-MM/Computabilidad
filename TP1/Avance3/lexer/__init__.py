@@ -287,9 +287,13 @@ def t_error(t):
     print(f"Illegal character '{str(t.value[0])}'")
     character = input("Press a Key to continue: ")
     t.lexer.skip(1)
+    
 
+# Build the lexer used by the parser
+lexer = lex.lex()
+"""
 def tokenize(data):
-    """Tokenize the input string and print each token."""
+    #Tokenize the input string and print each token.
     # Build the lexer
     lexer = lex.lex()
 
@@ -303,4 +307,4 @@ def tokenize(data):
             # No more input
             break     
         print(tok)
-        
+"""  
