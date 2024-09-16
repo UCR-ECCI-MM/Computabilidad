@@ -50,6 +50,12 @@ def p_tag_language_mapped_topic_nt(t):
                                     | empty'''
     if (len(t) > 2):
         print(f'[p_tag_language_mapped_topic_nt]: {t[1]} + {t[3]} + {t[4]} + {t[5]}')
+
+def p_tag_group_nt(t): 
+    '''tag_group_nt : TAG_GROUP ATTRIBUTE_URL URL ATTRIBUTE_ID NUMBER TAG_CLOSURE TEXT_OF_TAG TAG_GROUP_CLOSURE tag_group_nt
+                    | TAG_GROUP ATTRIBUTE_URL URL ATTRIBUTE_ID NUMBER TAG_CLOSURE TEXT_OF_TAG TAG_GROUP_CLOSURE'''
+    print(f'[p_tag_group_nt]: {t[1]} + {t[3]} + {t[4]} + {t[5]} + {t[6]}')
+
 """
 DONE:
 MEDI_PLUS_XML -> HEADER BODY tag-health-topics-closure
