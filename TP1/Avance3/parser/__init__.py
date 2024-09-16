@@ -74,6 +74,62 @@ def p_tag_descriptor_nt(t):
                          | TAG_QUALIFIER ATTRIBUTE_ID TEXT_OF_ATTRIBUTE TAG_CLOSURE TEXT_OF_TAG TAG_QUALIFIER_CLOSURE tag_descriptor_nt
                          | TAG_QUALIFIER ATTRIBUTE_ID TEXT_OF_ATTRIBUTE TAG_CLOSURE TEXT_OF_TAG TAG_QUALIFIER_CLOSURE'''
     print(f'[p_tag_descriptor_nt]: {t[1]} + {t[2]} + {t[3]} + {t[4]} + {t[5]} + {t[6]}')
+
+def p_tag_related_topic_nt(t): 
+    '''tag_related_topic_nt : TAG_RELATED_TOPIC ATTRIBUTE_URL URL ATTRIBUTE_ID NUMBER TAG_CLOSURE TEXT_OF_TAG TAG_RELATED_TOPIC_CLOSURE tag_related_topic_nt
+                            | empty'''
+    if(len(t) > 2):
+        print(f'[p_attributes_health_topic]: {t[1]} + {t[2]} + {t[3]} + {t[4]} + {t[5]} + {t[6]} + {t[7]} + {t[8]}')
+
+
+def p_tag_other_language_nt(t):
+    '''tag_other_language_nt : TAG_OTHER_LANGUAGE ATTRIBUTE_VERNACULAR_NAME TEXT_OF_ATTRIBUTE ATTRIBUTE_URL URL TAG_CLOSURE TEXT_OF_TAG TAG_OTHER_LANGUAGE_CLOSURE tag_other_language_nt
+                            |  TAG_OTHER_LANGUAGE ATTRIBUTE_VERNACULAR_NAME TEXT_OF_ATTRIBUTE ATTRIBUTE_URL TEXT_OF_ATTRIBUTE TAG_CLOSURE TEXT_OF_TAG TAG_OTHER_LANGUAGE_CLOSURE tag_other_language_nt 
+                            | empty'''
+    if(len(t) > 2): 
+        print(f'[p_tag_other_language_nt]: {t[1]} + {t[2]} + {t[3]} + {t[4]} + {t[5]} + {t[6]} + {t[7]} + {t[8]}')
+
+def p_tag_primary_institute_nt(t): 
+    '''tag_primary_institute_nt :  TAG_PRIMARY_INSTITUTE ATTRIBUTE_URL URL TAG_CLOSURE TEXT_OF_TAG TAG_PRIMARY_INSTITUTE_CLOSURE
+                                | empty'''
+    if(len(t) > 2): 
+        print(f'[p_tag_primary_institute_nt]: {t[1]} + {t[2]} + {t[3]} + {t[4]} + {t[5]} + {t[6]}')
+
+def p_tag_site_nt(t):
+    '''tag_site_nt : TAG_SITE ATTRIBUTE_TITLE TEXT_OF_ATTRIBUTE ATTRIBUTE_URL URL ATTRIBUTE_LANGUAGE_MAPPED_URL URL TAG_CLOSURE tags_under_site TAG_SITE_CLOSURE tag_site_nt
+                   | TAG_SITE ATTRIBUTE_TITLE TEXT_OF_ATTRIBUTE ATTRIBUTE_URL URL ATTRIBUTE_LANGUAGE_MAPPED_URL URL TAG_CLOSURE tags_under_site TAG_SITE_CLOSURE
+                   | TAG_SITE ATTRIBUTE_TITLE TEXT_OF_ATTRIBUTE ATTRIBUTE_URL URL TAG_CLOSURE tags_under_site TAG_SITE_CLOSURE tag_site_nt 
+                   | TAG_SITE ATTRIBUTE_TITLE TEXT_OF_ATTRIBUTE ATTRIBUTE_URL URL TAG_CLOSURE tags_under_site TAG_SITE_CLOSURE 
+                   | TAG_SITE ATTRIBUTE_TITLE TEXT_OF_ATTRIBUTE ATTRIBUTE_LANGUAGE_MAPPED_URL URL TAG_CLOSURE tags_under_site TAG_SITE_CLOSURE tag_site_nt
+                   | TAG_SITE ATTRIBUTE_TITLE TEXT_OF_ATTRIBUTE ATTRIBUTE_LANGUAGE_MAPPED_URL URL TAG_CLOSURE tags_under_site TAG_SITE_CLOSURE'''
+    if (len(t) >= 11 ):
+        print(f'[p_tag_site_nt]: {t[1]} + {t[2]} + {t[3]} + {t[4]} + {t[5]} + {t[6]} + {t[7]} + {t[8]} + {t[10]}')
+    else: 
+        print(f'[p_tag_site_nt]: {t[1]} + {t[2]} + {t[3]} + {t[4]} + {t[5]} + {t[6]} +  {t[8]}')
+
+
+def p_tags_under_site(t):
+    'tags_under_site : tag_information_category_nt tag_organization_nt tag_standard_description_nt'
+
+def p_tag_information_category_nt(t):
+    '''tag_information_category_nt : TAG_INFORMATION_CATEGORY TEXT_OF_TAG TAG_INFORMATION_CATEGORY_CLOSURE tag_information_category_nt
+                                   | empty'''
+    if(len(t) > 2): 
+        print(f'[p_tag_information_category_nt]: {t[1]} + {t[2]} + {t[3]}')
+
+def p_tag_organization_nt(t):
+    '''tag_organization_nt : TAG_ORGANIZATION TEXT_OF_TAG TAG_ORGANIZATION_CLOSURE tag_organization_nt 
+                           | empty'''
+    if(len(t) > 2): 
+        print(f'[p_tag_organization_nt]: {t[1]} + {t[2]} + {t[3]}')
+
+def p_tag_standard_description_nt(t):
+    '''tag_standard_description_nt : TAG_STANDARD_DESCRIPTION TEXT_OF_TAG  TAG_STANDARD_DESCRIPTION_CLOSURE tag_standard_description_nt
+                                   | empty'''
+    if(len(t) > 2): 
+        print(f'[p_tag_standard_description_nt]: {t[1]} + {t[2]} + {t[3]}')
+
+
 """
 DONE:
 MEDI_PLUS_XML -> HEADER BODY tag-health-topics-closure
