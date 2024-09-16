@@ -39,6 +39,12 @@ def p_tags_under_health_topic(t):
     'tags_under_health_topic : tag_also_called_nt TAG_FULL_SUMMARY tag_group_nt tag_language_mapped_topic_nt tag_mesh_heading_nt tag_other_language_nt tag_primary_institute_nt tag_related_topic_nt tag_see_reference_nt tag_site_nt' 
     print(f'[p_tags_under_health_topic]: ***Full summary successfully captured***')
 
+def p_tag_also_called_nt(t):
+    '''tag_also_called_nt : TAG_ALSO_CALLED TEXT_OF_TAG TAG_ALSO_CALLED_CLOSURE tag_also_called_nt
+                          | empty'''
+    if (len(t) > 2):
+        print(f'[p_tag_also_called_nt]: {t[1]} + {t[2]} + {t[3]}')
+
 """
 DONE:
 MEDI_PLUS_XML -> HEADER BODY tag-health-topics-closure
