@@ -226,7 +226,7 @@ def t_ATTRIBUTE_DATE_GENERATED(t):
 
 # Health-topic tag
 def t_ATTRIBUTE_ID(t):
-    r'(?i)id='
+    r'[iI][dD]='
     return t
 
 def t_ATTRIBUTE_DATE_CREATED(t):
