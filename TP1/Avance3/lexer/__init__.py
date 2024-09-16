@@ -99,7 +99,6 @@ tokens = (
 # Regular expression rules for simple tokens:
 # XML Header
 t_TAG_XML = r'<\?xml'
-t_XML_TAG_CLOSURE = r'\?>'
 
 """
 TAG_DOCTYPE matches the top level tag.
@@ -159,17 +158,17 @@ t_TAG_CLOSURE = '>'
 
 # Regular expression rules for Language mapped topic tags
 t_TAG_LANGUAGE_MAPPED_TOPIC = r'<language-mapped-topic'
-t_TAG_LANGUAGE_MAPPED_TOPIC_CLOSURE = r'</language-mapped-topic'
+t_TAG_LANGUAGE_MAPPED_TOPIC_CLOSURE = r'</language-mapped-topic>'
 
 
 # Regular expression rules for See reference tags
-t_TAG_SEE_REFERENCE = r'<see-reference'
-t_TAG_SEE_REFERENCE_CLOSURE = r'</see-reference'
+t_TAG_SEE_REFERENCE = r'<see-reference>'
+t_TAG_SEE_REFERENCE_CLOSURE = r'</see-reference>'
 
 
 # Regular expression rules for Group tags
 t_TAG_GROUP = r'<group'
-t_TAG_GROUP_CLOSURE = r'</group'
+t_TAG_GROUP_CLOSURE = r'</group>'
 
 """
 The following are Tokens defined by functions.
@@ -192,7 +191,7 @@ def t_NUMBER(t):
     return t
 
 def t_URL(t):
-    r'"(https|http)://[a-zA-Z0-9\.-]+(/[^"\s]*)?"'
+    r'"(https|http)://[a-zA-Z0-9:\.-]+(/[^"\s]*)?"'
     return t
 
 def t_DATE(t):
@@ -203,6 +202,10 @@ def t_DATE(t):
 def t_TIME(t):
     r'([01][0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])"'
     t.value = t.value[:-1] # remove double quote
+    return t
+
+def t_XML_TAG_CLOSURE(t):
+    r'\?>'
     return t
 
 def t_ATTRIBUTE_VERSION(t):
