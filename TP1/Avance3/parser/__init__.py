@@ -67,6 +67,13 @@ def p_tag_mesh_heading_nt(t):
                            | empty'''
     if (len(t)) > 2:
         print(f'[p_tag_mesh_heading_nt]: {t[1]} + {t[3]}')
+
+def p_tag_descriptor_nt(t):
+    '''tag_descriptor_nt : TAG_DESCRIPTOR ATTRIBUTE_ID TEXT_OF_ATTRIBUTE TAG_CLOSURE TEXT_OF_TAG TAG_DESCRIPTOR_CLOSURE tag_descriptor_nt
+                         | TAG_DESCRIPTOR ATTRIBUTE_ID TEXT_OF_ATTRIBUTE TAG_CLOSURE TEXT_OF_TAG TAG_DESCRIPTOR_CLOSURE
+                         | TAG_QUALIFIER ATTRIBUTE_ID TEXT_OF_ATTRIBUTE TAG_CLOSURE TEXT_OF_TAG TAG_QUALIFIER_CLOSURE tag_descriptor_nt
+                         | TAG_QUALIFIER ATTRIBUTE_ID TEXT_OF_ATTRIBUTE TAG_CLOSURE TEXT_OF_TAG TAG_QUALIFIER_CLOSURE'''
+    print(f'[p_tag_descriptor_nt]: {t[1]} + {t[2]} + {t[3]} + {t[4]} + {t[5]} + {t[6]}')
 """
 DONE:
 MEDI_PLUS_XML -> HEADER BODY tag-health-topics-closure
