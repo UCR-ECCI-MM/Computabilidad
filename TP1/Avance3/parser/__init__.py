@@ -36,7 +36,8 @@ def p_attributes_health_topic(t):
         print(f'[p_attributes_health_topic]: {t[1]} + {t[2]} + {t[3]} + {t[4]} + {t[5]} + {t[6]}')
 
 def p_tags_under_health_topic(t):
-    'tags_under_health_topic : empty' 
+    'tags_under_health_topic : tag_also_called_nt TAG_FULL_SUMMARY tag_group_nt tag_language_mapped_topic_nt tag_mesh_heading_nt tag_other_language_nt tag_primary_institute_nt tag_related_topic_nt tag_see_reference_nt tag_site_nt' 
+    print(f'[p_tags_under_health_topic]: ***Full summary successfully captured***')
 
 """
 DONE:
