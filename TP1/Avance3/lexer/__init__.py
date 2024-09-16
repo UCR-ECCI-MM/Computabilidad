@@ -295,20 +295,3 @@ def t_error(t):
 
 # Build the lexer used by the parser
 lexer = lex.lex()
-"""
-def tokenize(data):
-    #Tokenize the input string and print each token.
-    # Build the lexer
-    lexer = lex.lex()
-
-    # Give the lexer some input
-    lexer.input(data)
-
-    # Tokenize
-    while True:
-        tok = lexer.token()
-        if not tok:
-            # No more input
-            break     
-        print(tok)
-"""  
