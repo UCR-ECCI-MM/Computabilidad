@@ -61,6 +61,12 @@ def p_tag_see_reference_nt(t):
                             | empty'''
     if (len(t) > 2):
         print(f'[p_tag_see_reference_nt]: {t[1]} + {t[2]} + {t[3]}')
+
+def p_tag_mesh_heading_nt(t):
+    '''tag_mesh_heading_nt : TAG_MESH_HEADING tag_descriptor_nt TAG_MESH_HEADING_CLOSURE tag_mesh_heading_nt
+                           | empty'''
+    if (len(t)) > 2:
+        print(f'[p_tag_mesh_heading_nt]: {t[1]} + {t[3]}')
 """
 DONE:
 MEDI_PLUS_XML -> HEADER BODY tag-health-topics-closure
