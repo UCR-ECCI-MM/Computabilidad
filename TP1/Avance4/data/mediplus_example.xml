@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE health-topics PUBLIC "-//NLM//DTD health-topics //EN" "https://medlineplus.gov/xml/mplus_topics.dtd">
+<health-topics total="2044" date-generated="08/10/2024 02:30:32">
+<health-topic
+    meta-desc="If you are being tested for Type 2 diabetes, your doctor gives you an A1C test. The test is also used to monitor your A1C levels."
+    title="A1C" url="https://medlineplus.gov/a1c.html" id="6308" language="English"
+    date-created="12/22/2015">
+    <also-called>Glycohemoglobin</also-called>
+    <also-called>HbA1C</also-called>
+    <also-called>Hemoglobin A1C test</also-called>
+    <full-summary><p>A1C is a blood test for <a href="https://medlineplus.gov/diabetestype2.html">type
+        2 diabetes</a> and <a href="https://medlineplus.gov/prediabetes.html">prediabetes</a>. It
+        measures your average blood glucose, or <a href="https://medlineplus.gov/bloodglucose.html">blood
+        sugar</a>, level over the past 3 months. Doctors may use the A1C alone or in combination
+        with other diabetes tests to make a diagnosis. They also use the A1C to see how well you are
+        managing your diabetes. This test is different from the blood sugar checks that people with
+        diabetes do every day.</p>
+
+<p>Your A1C test result is given in percentages. The higher the
+        percentage, the higher your blood sugar levels have been:</p>
+<ul>
+            <li>A normal A1C level is below 5.7%</li>
+            <li>Prediabetes is between 5.7 to 6.4%. Having prediabetes is a risk factor for getting
+        type 2 diabetes. People with prediabetes may need retests every year.</li>
+            <li>Type 2 diabetes is above 6.5%</li>
+            <li>If you have diabetes, you should have the A1C test at least twice a year. The A1C
+        goal for many people with diabetes is below 7. It may be different for you. Ask what your
+        goal should be. If your A1C result is too high, you may need to change your diabetes care
+        plan.</li>
+        </ul>
+
+<p class="">NIH: National Institute of Diabetes and Digestive and
+        Kidney Diseases</p></full-summary>
+    <group url="https://medlineplus.gov/diagnostictests.html" id="25">Diagnostic Tests</group>
+    <group url="https://medlineplus.gov/diabetesmellitus.html" id="45">Diabetes Mellitus</group>
+    <language-mapped-topic url="https://medlineplus.gov/spanish/a1c.html" id="6309"
+        language="Spanish">Prueba de hemoglobina glicosilada (HbA1c)</language-mapped-topic>
+    <mesh-heading>
+        <descriptor id="D006442">Glycated Hemoglobin</descriptor>
+    </mesh-heading>
+    <other-language vernacular-name="español" url="https://medlineplus.gov/spanish/a1c.html">Spanish</other-language>
+    <primary-institute url="https://www.niddk.nih.gov">National Institute of Diabetes and Digestive
+        and Kidney Diseases</primary-institute>
+    <see-reference>Hemoglobin A1c</see-reference>
+    <site title="A1C and eAG" url="https://diabetes.org/a1c-eag-conversion-calculator"
+        language-mapped-url="http://www.diabetes.org/es/vivir-con-diabetes/tratamiento-y-cuidado/el-control-de-la-glucosa-en-la-sangre/a1c-y-eag.html?loc=lwd-es-slabnav">
+        <information-category>Learn More</information-category>
+        <organization>American Diabetes Association</organization>
+    </site>
+    <site title="A1C test" url="https://medlineplus.gov/ency/article/003640.htm"
+        language-mapped-url="https://medlineplus.gov/spanish/ency/article/003640.htm">
+        <information-category>Patient Handouts</information-category>
+        <organization>Medical Encyclopedia</organization>
+    </site>
+    <site title="A1C Test and Diabetes"
+        url="https://www.niddk.nih.gov/health-information/diagnostic-tests/a1c-test"
+        language-mapped-url="https://www.niddk.nih.gov/health-information/informacion-de-la-salud/pruebas-diagnosticas/prueba-a1c-diabetes">
+        <information-category>Learn More</information-category>
+        <organization>National Institute of Diabetes and Digestive and Kidney Diseases</organization>
+        <standard-description>NIH</standard-description>
+    </site>
+    <site title="A1C Test and Race/Ethnicity"
+        url="https://www.niddk.nih.gov/health-information/diagnostic-tests/a1c-test-race-ethnicity">
+        <information-category>Learn More</information-category>
+        <organization>National Institute of Diabetes and Digestive and Kidney Diseases</organization>
+        <standard-description>NIH</standard-description>
+    </site>
+    <site title="ClinicalTrials.gov: Hemoglobin A1C"
+        url="https://clinicaltrials.gov/search?intr=%22Hemoglobin+A1C%22&amp;aggFilters=status:not%20rec">
+        <information-category>Clinical Trials</information-category>
+        <organization>National Institutes of Health</organization>
+        <standard-description>NIH</standard-description>
+    </site>
+    <site title="Hemoglobin A1C (HbA1c) Test"
+        url="https://medlineplus.gov/lab-tests/hemoglobin-a1c-hba1c-test/"
+        language-mapped-url="https://medlineplus.gov/spanish/pruebas-de-laboratorio/prueba-de-hemoglobina-a1c/">
+        <information-category>Learn More</information-category>
+        <organization>National Library of Medicine</organization>
+        <standard-description>NIH</standard-description>
+    </site>
+    <site title="A1C"
+        url="https://pubmed.ncbi.nlm.nih.gov/?term=%22Glycated+Hemoglobin%22%5Bmajr%3Anoexp%5D+AND+humans%5Bmh%5D+AND+english%5Bla%5D+AND+%22last+1+Year%22+%5Bedat%5D+NOT+%28letter%5Bpt%5D+OR+case+reports%5Bpt%5D+OR+editorial%5Bpt%5D+OR+comment%5Bpt%5D%29+AND+free+full+text%5Bsb%5D+">
+        <information-category>Journal Articles</information-category>
+    </site>
+    <site title="Understanding A1C" url="https://diabetes.org/about-diabetes/a1c">
+        <information-category>Learn More</information-category>
+        <organization>American Diabetes Association</organization>
+    </site>
+</health-topic>
+</health-topics>
