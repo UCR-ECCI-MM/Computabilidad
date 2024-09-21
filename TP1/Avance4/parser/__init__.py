@@ -40,27 +40,27 @@ def p_tags_under_health_topic(t):
     print(f'[p_tags_under_health_topic]: ***Full summary successfully captured***')
 
 def p_tag_also_called_nt(t):
-    '''tag_also_called_nt : TAG_ALSO_CALLED TEXT_OF_TAG TAG_ALSO_CALLED_CLOSURE tag_also_called_nt
+    '''tag_also_called_nt : TAG_ALSO_CALLED text_of_tag_nt TAG_ALSO_CALLED_CLOSURE tag_also_called_nt
                           | empty'''
     if (len(t) > 2):
-        print(f'[p_tag_also_called_nt]: {t[1]} + {t[2]} + {t[3]}')
+        print(f'[p_tag_also_called_nt]: {t[1]} + {t[3]}')
 
 def p_tag_language_mapped_topic_nt(t):
-    '''tag_language_mapped_topic_nt : TAG_LANGUAGE_MAPPED_TOPIC attributes_health_topic TAG_CLOSURE TEXT_OF_TAG TAG_LANGUAGE_MAPPED_TOPIC_CLOSURE 
+    '''tag_language_mapped_topic_nt : TAG_LANGUAGE_MAPPED_TOPIC attributes_health_topic TAG_CLOSURE text_of_tag_nt TAG_LANGUAGE_MAPPED_TOPIC_CLOSURE 
                                     | empty'''
     if (len(t) > 2):
-        print(f'[p_tag_language_mapped_topic_nt]: {t[1]} + {t[3]} + {t[4]} + {t[5]}')
+        print(f'[p_tag_language_mapped_topic_nt]: {t[1]} + {t[3]} + {t[5]}')
 
 def p_tag_group_nt(t): 
-    '''tag_group_nt : TAG_GROUP ATTRIBUTE_URL URL ATTRIBUTE_ID NUMBER TAG_CLOSURE TEXT_OF_TAG TAG_GROUP_CLOSURE tag_group_nt
-                    | TAG_GROUP ATTRIBUTE_URL URL ATTRIBUTE_ID NUMBER TAG_CLOSURE TEXT_OF_TAG TAG_GROUP_CLOSURE'''
+    '''tag_group_nt : TAG_GROUP ATTRIBUTE_URL URL ATTRIBUTE_ID NUMBER TAG_CLOSURE text_of_tag_nt TAG_GROUP_CLOSURE tag_group_nt
+                    | TAG_GROUP ATTRIBUTE_URL URL ATTRIBUTE_ID NUMBER TAG_CLOSURE text_of_tag_nt TAG_GROUP_CLOSURE'''
     print(f'[p_tag_group_nt]: {t[1]} + {t[3]} + {t[4]} + {t[5]} + {t[6]}')
 
 def p_tag_see_reference_nt(t):
-    '''tag_see_reference_nt : TAG_SEE_REFERENCE TEXT_OF_TAG TAG_SEE_REFERENCE_CLOSURE tag_see_reference_nt
+    '''tag_see_reference_nt : TAG_SEE_REFERENCE text_of_tag_nt TAG_SEE_REFERENCE_CLOSURE tag_see_reference_nt
                             | empty'''
     if (len(t) > 2):
-        print(f'[p_tag_see_reference_nt]: {t[1]} + {t[2]} + {t[3]}')
+        print(f'[p_tag_see_reference_nt]: {t[1]} + {t[3]}')
 
 def p_tag_mesh_heading_nt(t):
     '''tag_mesh_heading_nt : TAG_MESH_HEADING tag_descriptor_nt TAG_MESH_HEADING_CLOSURE tag_mesh_heading_nt
@@ -69,31 +69,31 @@ def p_tag_mesh_heading_nt(t):
         print(f'[p_tag_mesh_heading_nt]: {t[1]} + {t[3]}')
 
 def p_tag_descriptor_nt(t):
-    '''tag_descriptor_nt : TAG_DESCRIPTOR ATTRIBUTE_ID TEXT_OF_ATTRIBUTE TAG_CLOSURE TEXT_OF_TAG TAG_DESCRIPTOR_CLOSURE tag_descriptor_nt
-                         | TAG_DESCRIPTOR ATTRIBUTE_ID TEXT_OF_ATTRIBUTE TAG_CLOSURE TEXT_OF_TAG TAG_DESCRIPTOR_CLOSURE
-                         | TAG_QUALIFIER ATTRIBUTE_ID TEXT_OF_ATTRIBUTE TAG_CLOSURE TEXT_OF_TAG TAG_QUALIFIER_CLOSURE tag_descriptor_nt
-                         | TAG_QUALIFIER ATTRIBUTE_ID TEXT_OF_ATTRIBUTE TAG_CLOSURE TEXT_OF_TAG TAG_QUALIFIER_CLOSURE'''
-    print(f'[p_tag_descriptor_nt]: {t[1]} + {t[2]} + {t[3]} + {t[4]} + {t[5]} + {t[6]}')
+    '''tag_descriptor_nt : TAG_DESCRIPTOR ATTRIBUTE_ID TEXT_OF_ATTRIBUTE TAG_CLOSURE text_of_tag_nt TAG_DESCRIPTOR_CLOSURE tag_descriptor_nt
+                         | TAG_DESCRIPTOR ATTRIBUTE_ID TEXT_OF_ATTRIBUTE TAG_CLOSURE text_of_tag_nt TAG_DESCRIPTOR_CLOSURE
+                         | TAG_QUALIFIER ATTRIBUTE_ID TEXT_OF_ATTRIBUTE TAG_CLOSURE text_of_tag_nt TAG_QUALIFIER_CLOSURE tag_descriptor_nt
+                         | TAG_QUALIFIER ATTRIBUTE_ID TEXT_OF_ATTRIBUTE TAG_CLOSURE text_of_tag_nt TAG_QUALIFIER_CLOSURE'''
+    print(f'[p_tag_descriptor_nt]: {t[1]} + {t[2]} + {t[3]} + {t[4]} + {t[6]}')
 
 def p_tag_related_topic_nt(t): 
-    '''tag_related_topic_nt : TAG_RELATED_TOPIC ATTRIBUTE_URL URL ATTRIBUTE_ID NUMBER TAG_CLOSURE TEXT_OF_TAG TAG_RELATED_TOPIC_CLOSURE tag_related_topic_nt
+    '''tag_related_topic_nt : TAG_RELATED_TOPIC ATTRIBUTE_URL URL ATTRIBUTE_ID NUMBER TAG_CLOSURE text_of_tag_nt TAG_RELATED_TOPIC_CLOSURE tag_related_topic_nt
                             | empty'''
     if(len(t) > 2):
-        print(f'[p_attributes_health_topic]: {t[1]} + {t[2]} + {t[3]} + {t[4]} + {t[5]} + {t[6]} + {t[7]} + {t[8]}')
+        print(f'[p_attributes_health_topic]: {t[1]} + {t[2]} + {t[3]} + {t[4]} + {t[5]} + {t[6]} + {t[8]}')
 
 
 def p_tag_other_language_nt(t):
-    '''tag_other_language_nt : TAG_OTHER_LANGUAGE ATTRIBUTE_VERNACULAR_NAME TEXT_OF_ATTRIBUTE ATTRIBUTE_URL URL TAG_CLOSURE TEXT_OF_TAG TAG_OTHER_LANGUAGE_CLOSURE tag_other_language_nt
-                            |  TAG_OTHER_LANGUAGE ATTRIBUTE_VERNACULAR_NAME TEXT_OF_ATTRIBUTE ATTRIBUTE_URL TEXT_OF_ATTRIBUTE TAG_CLOSURE TEXT_OF_TAG TAG_OTHER_LANGUAGE_CLOSURE tag_other_language_nt 
+    '''tag_other_language_nt : TAG_OTHER_LANGUAGE ATTRIBUTE_VERNACULAR_NAME TEXT_OF_ATTRIBUTE ATTRIBUTE_URL URL TAG_CLOSURE text_of_tag_nt TAG_OTHER_LANGUAGE_CLOSURE tag_other_language_nt
+                            |  TAG_OTHER_LANGUAGE ATTRIBUTE_VERNACULAR_NAME TEXT_OF_ATTRIBUTE ATTRIBUTE_URL TEXT_OF_ATTRIBUTE TAG_CLOSURE text_of_tag_nt TAG_OTHER_LANGUAGE_CLOSURE tag_other_language_nt 
                             | empty'''
     if(len(t) > 2): 
-        print(f'[p_tag_other_language_nt]: {t[1]} + {t[2]} + {t[3]} + {t[4]} + {t[5]} + {t[6]} + {t[7]} + {t[8]}')
+        print(f'[p_tag_other_language_nt]: {t[1]} + {t[2]} + {t[3]} + {t[4]} + {t[5]} + {t[6]} + {t[8]}')
 
 def p_tag_primary_institute_nt(t): 
-    '''tag_primary_institute_nt :  TAG_PRIMARY_INSTITUTE ATTRIBUTE_URL URL TAG_CLOSURE TEXT_OF_TAG TAG_PRIMARY_INSTITUTE_CLOSURE
+    '''tag_primary_institute_nt :  TAG_PRIMARY_INSTITUTE ATTRIBUTE_URL URL TAG_CLOSURE text_of_tag_nt TAG_PRIMARY_INSTITUTE_CLOSURE
                                 | empty'''
     if(len(t) > 2): 
-        print(f'[p_tag_primary_institute_nt]: {t[1]} + {t[2]} + {t[3]} + {t[4]} + {t[5]} + {t[6]}')
+        print(f'[p_tag_primary_institute_nt]: {t[1]} + {t[2]} + {t[3]} + {t[4]} + {t[6]}')
 
 def p_tag_site_nt(t):
     '''tag_site_nt : TAG_SITE ATTRIBUTE_TITLE TEXT_OF_ATTRIBUTE ATTRIBUTE_URL URL ATTRIBUTE_LANGUAGE_MAPPED_URL URL TAG_CLOSURE tags_under_site TAG_SITE_CLOSURE tag_site_nt
@@ -112,22 +112,32 @@ def p_tags_under_site(t):
     'tags_under_site : tag_information_category_nt tag_organization_nt tag_standard_description_nt'
 
 def p_tag_information_category_nt(t):
-    '''tag_information_category_nt : TAG_INFORMATION_CATEGORY TEXT_OF_TAG TAG_INFORMATION_CATEGORY_CLOSURE tag_information_category_nt
+    '''tag_information_category_nt : TAG_INFORMATION_CATEGORY text_of_tag_nt TAG_INFORMATION_CATEGORY_CLOSURE tag_information_category_nt
                                    | empty'''
     if(len(t) > 2): 
-        print(f'[p_tag_information_category_nt]: {t[1]} + {t[2]} + {t[3]}')
+        print(f'[p_tag_information_category_nt]: {t[1]} + {t[3]}')
 
 def p_tag_organization_nt(t):
-    '''tag_organization_nt : TAG_ORGANIZATION TEXT_OF_TAG TAG_ORGANIZATION_CLOSURE tag_organization_nt 
+    '''tag_organization_nt : TAG_ORGANIZATION text_of_tag_nt TAG_ORGANIZATION_CLOSURE tag_organization_nt 
                            | empty'''
     if(len(t) > 2): 
-        print(f'[p_tag_organization_nt]: {t[1]} + {t[2]} + {t[3]}')
+        print(f'[p_tag_organization_nt]: {t[1]} + {t[3]}')
 
 def p_tag_standard_description_nt(t):
-    '''tag_standard_description_nt : TAG_STANDARD_DESCRIPTION TEXT_OF_TAG  TAG_STANDARD_DESCRIPTION_CLOSURE tag_standard_description_nt
+    '''tag_standard_description_nt : TAG_STANDARD_DESCRIPTION text_of_tag_nt  TAG_STANDARD_DESCRIPTION_CLOSURE tag_standard_description_nt
                                    | empty'''
     if(len(t) > 2): 
-        print(f'[p_tag_standard_description_nt]: {t[1]} + {t[2]} + {t[3]}')
+        print(f'[p_tag_standard_description_nt]: {t[1]} + {t[3]}')
+
+def p_text_of_tag_nt(t):
+    '''text_of_tag_nt : TEXT_OF_TAG text_of_tag_auxiliary_nt
+    '''
+
+def p_text_of_tag_auxiliary_nt(t):
+    '''text_of_tag_auxiliary_nt : TEXT_OF_ATTRIBUTE text_of_tag_auxiliary_nt
+                                | TEXT_OF_ATTRIBUTE TEXT_OF_TAG text_of_tag_auxiliary_nt
+                                | empty
+    '''
 
 def p_empty(t):
     'empty :'
