@@ -34,7 +34,7 @@ def p_body(t):
     if (len(t) > 2):
         # We use the `id` as the key for the health topic
         # The health topic is saved directly in `xml_dict`, without being sent to a higher production 
-        xml_dict['health_topics'][t[1]['id']] = {'attributes' : t[1]}
+        xml_dict['health_topics'][t[1]['id']] = {'attributes' : t[1], 'tags' : t[2]}
         
 def p_health_topic_nt(t):
     'tag_health_topic_nt : TAG_HEALTH_TOPIC attributes_health_topic TAG_CLOSURE'
@@ -47,19 +47,28 @@ def p_attributes_health_topic(t):
     # save the attributes of tag <health-topic> in a dictionary
     if (len(t) == 13):
         t[0] = {t[1][:-1] : t[2][1:-1], t[3][:-1] : t[4][1:-1], t[5][:-1] : t[6][1:-1], 
-                t[7][:-1] : t[8], t[9][:-1] : t[10][1:-1], t[11][-1] : t[12][1:-1]}
+                t[7][:-1] : t[8], t[9][:-1] : t[10][1:-1], t[11][:-1] : t[12][1:-1]}
     else:
         t[0] = {t[1][:-1] : t[2][1:-1], t[3][:-1] : t[4], t[5][:-1] : t[6][1:-1]}
 
 def p_tags_under_health_topic(t):
     'tags_under_health_topic : tag_also_called_nt TAG_FULL_SUMMARY tag_group_nt tag_language_mapped_topic_nt tag_mesh_heading_nt tag_other_language_nt tag_primary_institute_nt tag_related_topic_nt tag_see_reference_nt tag_site_nt' 
     print(f'[p_tags_under_health_topic]: ***Full summary successfully captured***')
+    t[0] = {}
+    if (t[1] != None):
+        t[0]['also-called'] = t[1]
 
 def p_tag_also_called_nt(t):
     '''tag_also_called_nt : TAG_ALSO_CALLED text_of_tag_nt TAG_ALSO_CALLED_CLOSURE tag_also_called_nt
                           | empty'''
+    # tags that can be repeated are stored in a list
     if (len(t) > 2):
-        print(f'[p_tag_also_called_nt]: {t[1]} + {t[3]}')
+        if (t[4] != None and isinstance(t[4], list)):
+            t[0] = t[4]
+            t[0].append(t[2])
+        else:
+            t[0] = [t[2]]
+            
 
 def p_tag_language_mapped_topic_nt(t):
     '''tag_language_mapped_topic_nt : TAG_LANGUAGE_MAPPED_TOPIC attributes_health_topic TAG_CLOSURE text_of_tag_nt TAG_LANGUAGE_MAPPED_TOPIC_CLOSURE 
@@ -148,12 +157,22 @@ def p_tag_standard_description_nt(t):
 def p_text_of_tag_nt(t):
     '''text_of_tag_nt : TEXT_OF_TAG text_of_tag_auxiliary_nt
     '''
+    # concatenate the string and send to a superior production rule
+    t[0] = t[1] + t[2]
 
 def p_text_of_tag_auxiliary_nt(t):
     '''text_of_tag_auxiliary_nt : TEXT_OF_ATTRIBUTE text_of_tag_auxiliary_nt
                                 | TEXT_OF_ATTRIBUTE TEXT_OF_TAG text_of_tag_auxiliary_nt
                                 | empty
     '''
+    # concatenate the string and send to a superior production rule
+    if (len(t) == 3):
+        t[0] = t[1][1:-1] + t[2]
+    elif (len(t) == 4):
+        t[0] = t[1][1:-1] + t[2] + t[3]
+    else:
+        t[0] = ""
+        
 
 def p_empty(t):
     'empty :'
