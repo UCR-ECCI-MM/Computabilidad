@@ -18,11 +18,9 @@ def p_medi_plus_xml(t):
 def p_header(t):
     'header : header_version_encoding TAG_DOCTYPE tag_health_topics_nt'
     t[0] = t[3]
-    print(f'[p_header]: {t[2]}')
 
 def p_header_version_encoding(t):
     'header_version_encoding : TAG_XML ATTRIBUTE_VERSION TEXT_OF_ATTRIBUTE ATTRIBUTE_ENCODING TEXT_OF_ATTRIBUTE XML_TAG_CLOSURE'
-    print(f'[p_header_version_encoding]: {t[1]} + {t[2]} + {t[3]} + {t[4]} + {t[5]} + {t[6]}')
     
 def p_tag_health_topics(t):
     'tag_health_topics_nt : TAG_HEALTH_TOPICS ATTRIBUTE_TOTAL NUMBER ATTRIBUTE_DATE_GENERATED DATE TIME TAG_CLOSURE'
@@ -60,7 +58,12 @@ def p_tags_under_health_topic(t):
         t[0]['also-called'] = t[1]
     t[0]['group'] = t[3]
     t[0]['full-summary'] = t[2]
-    
+    if(t[4] != None):
+        t[0]['language-mapped-topic'] = t[4]
+    if(t[5] != None):
+        t[0]['mesh-heading'] = t[5]
+    if(t[6] != None):
+        t[0]['other-language'] = t[6]
 
 def p_tag_also_called_nt(t):
     '''tag_also_called_nt : TAG_ALSO_CALLED text_of_tag_nt TAG_ALSO_CALLED_CLOSURE tag_also_called_nt
@@ -78,7 +81,8 @@ def p_tag_language_mapped_topic_nt(t):
     '''tag_language_mapped_topic_nt : TAG_LANGUAGE_MAPPED_TOPIC attributes_health_topic TAG_CLOSURE text_of_tag_nt TAG_LANGUAGE_MAPPED_TOPIC_CLOSURE 
                                     | empty'''
     if (len(t) > 2):
-        print(f'[p_tag_language_mapped_topic_nt]: {t[1]} + {t[3]} + {t[5]}')
+        # save attributes and tag text
+        t[0] = {'attributes': t[2], 'tag-text': t[4]}
 
 def p_tag_group_nt(t): 
     '''tag_group_nt : TAG_GROUP ATTRIBUTE_URL URL ATTRIBUTE_ID NUMBER TAG_CLOSURE text_of_tag_nt TAG_GROUP_CLOSURE tag_group_nt
@@ -101,14 +105,23 @@ def p_tag_mesh_heading_nt(t):
     '''tag_mesh_heading_nt : TAG_MESH_HEADING tag_descriptor_nt TAG_MESH_HEADING_CLOSURE tag_mesh_heading_nt
                            | empty'''
     if (len(t)) > 2:
-        print(f'[p_tag_mesh_heading_nt]: {t[1]} + {t[3]}')
+        if (t[4] != None):
+            # tags that can be repeated are stored in a list
+            t[0].append(t[2])
+        else:
+            t[0] = [t[2]]
 
 def p_tag_descriptor_nt(t):
     '''tag_descriptor_nt : TAG_DESCRIPTOR ATTRIBUTE_ID TEXT_OF_ATTRIBUTE TAG_CLOSURE text_of_tag_nt TAG_DESCRIPTOR_CLOSURE tag_descriptor_nt
                          | TAG_DESCRIPTOR ATTRIBUTE_ID TEXT_OF_ATTRIBUTE TAG_CLOSURE text_of_tag_nt TAG_DESCRIPTOR_CLOSURE
                          | TAG_QUALIFIER ATTRIBUTE_ID TEXT_OF_ATTRIBUTE TAG_CLOSURE text_of_tag_nt TAG_QUALIFIER_CLOSURE tag_descriptor_nt
                          | TAG_QUALIFIER ATTRIBUTE_ID TEXT_OF_ATTRIBUTE TAG_CLOSURE text_of_tag_nt TAG_QUALIFIER_CLOSURE'''
-    print(f'[p_tag_descriptor_nt]: {t[1]} + {t[2]} + {t[3]} + {t[4]} + {t[6]}')
+    # save attributes and tag text in a dictionary
+    descriptor_dict = {'attributes': {t[2][:-1]: t[3][1:-1]}, 'tag-text': t[5]}
+    if (len(t) == 8):
+        t[0].append(descriptor_dict)
+    else:
+        t[0] = [descriptor_dict]
 
 def p_tag_related_topic_nt(t): 
     '''tag_related_topic_nt : TAG_RELATED_TOPIC ATTRIBUTE_URL URL ATTRIBUTE_ID NUMBER TAG_CLOSURE text_of_tag_nt TAG_RELATED_TOPIC_CLOSURE tag_related_topic_nt
@@ -122,7 +135,12 @@ def p_tag_other_language_nt(t):
                             |  TAG_OTHER_LANGUAGE ATTRIBUTE_VERNACULAR_NAME TEXT_OF_ATTRIBUTE ATTRIBUTE_URL TEXT_OF_ATTRIBUTE TAG_CLOSURE text_of_tag_nt TAG_OTHER_LANGUAGE_CLOSURE tag_other_language_nt 
                             | empty'''
     if(len(t) > 2): 
-        print(f'[p_tag_other_language_nt]: {t[1]} + {t[2]} + {t[3]} + {t[4]} + {t[5]} + {t[6]} + {t[8]}')
+        language_dic = {'attributes': {t[2][:-1]: t[3][1:-1], t[4][:-1]: t[5]}, 'tag-text': t[7]}
+        if (t[9] != None):
+            # tags that can be repeated are stored in a list
+            t[0].append(language_dic)
+        else:
+            t[0] = [language_dic]
 
 def p_tag_primary_institute_nt(t): 
     '''tag_primary_institute_nt :  TAG_PRIMARY_INSTITUTE ATTRIBUTE_URL URL TAG_CLOSURE text_of_tag_nt TAG_PRIMARY_INSTITUTE_CLOSURE
