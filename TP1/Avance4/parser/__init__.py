@@ -129,6 +129,7 @@ def p_tag_mesh_heading_nt(t):
                            | empty'''
     if (len(t)) > 2:
         if (t[4] != None):
+            t[0] = t[4]
             # tags that can be repeated are stored in a list
             t[0].append(t[2])
         else:
@@ -143,6 +144,7 @@ def p_tag_descriptor_nt(t):
     # save attributes and tag text in a dictionary
     descriptor_dict = {'attributes': {t[2][:-1]: t[3][1:-1]}, 'tag-text': t[5]}
     if (len(t) == 8):
+        t[0] = t[7]
         t[0].append(descriptor_dict)
     else:
         t[0] = [descriptor_dict]
@@ -169,6 +171,7 @@ def p_tag_other_language_nt(t):
     if(len(t) > 2): 
         language_dic = {'attributes': {t[2][:-1]: t[3][1:-1], t[4][:-1]: t[5]}, 'tag-text': t[7]}
         if (t[9] != None):
+            t[0] = t[9]
             # tags that can be repeated are stored in a list
             t[0].append(language_dic)
         else:
