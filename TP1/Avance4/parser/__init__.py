@@ -52,11 +52,12 @@ def p_attributes_health_topic(t):
         t[0] = {t[1][:-1] : t[2][1:-1], t[3][:-1] : t[4], t[5][:-1] : t[6][1:-1]}
 
 def p_tags_under_health_topic(t):
-    'tags_under_health_topic : tag_also_called_nt TAG_FULL_SUMMARY tag_group_nt tag_language_mapped_topic_nt tag_mesh_heading_nt tag_other_language_nt tag_primary_institute_nt tag_related_topic_nt tag_see_reference_nt tag_site_nt' 
-    print(f'[p_tags_under_health_topic]: ***Full summary successfully captured***')
+    'tags_under_health_topic : tag_also_called_nt TAG_FULL_SUMMARY tag_group_nt tag_language_mapped_topic_nt tag_mesh_heading_nt tag_other_language_nt tag_primary_institute_nt tag_related_topic_nt tag_see_reference_nt tag_site_nt'
     t[0] = {}
     if (t[1] != None):
         t[0]['also-called'] = t[1]
+        t[0]['full-summary'] = t[2]
+    
 
 def p_tag_also_called_nt(t):
     '''tag_also_called_nt : TAG_ALSO_CALLED text_of_tag_nt TAG_ALSO_CALLED_CLOSURE tag_also_called_nt
