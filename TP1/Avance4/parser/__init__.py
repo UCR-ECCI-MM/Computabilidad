@@ -5,7 +5,8 @@ from lexer import tokens
 xml_dict = {'total': None,
             'date_created': None, 
             'time_created': None,
-            'health_topics': {}}
+            # the different health topics are store in a list
+            'health_topics': []}
 
 def p_medi_plus_xml(t):
     'medi_plus_xml : header body TAG_HEALTH_TOPICS_CLOSURE'
@@ -34,7 +35,7 @@ def p_body(t):
     if (len(t) > 2):
         # We use the `id` as the key for the health topic
         # The health topic is saved directly in `xml_dict`, without being sent to a higher production 
-        xml_dict['health_topics'][t[1]['id']] = {'attributes' : t[1], 'tags' : t[2]}
+        xml_dict['health_topics'].append({'attributes' : t[1], 'tags' : t[2]})
         
 def p_health_topic_nt(t):
     'tag_health_topic_nt : TAG_HEALTH_TOPIC attributes_health_topic TAG_CLOSURE'
@@ -54,9 +55,11 @@ def p_attributes_health_topic(t):
 def p_tags_under_health_topic(t):
     'tags_under_health_topic : tag_also_called_nt TAG_FULL_SUMMARY tag_group_nt tag_language_mapped_topic_nt tag_mesh_heading_nt tag_other_language_nt tag_primary_institute_nt tag_related_topic_nt tag_see_reference_nt tag_site_nt'
     t[0] = {}
+    # tags are saved in a dictionary
     if (t[1] != None):
         t[0]['also-called'] = t[1]
-        t[0]['full-summary'] = t[2]
+    t[0]['group'] = t[3]
+    t[0]['full-summary'] = t[2]
     
 
 def p_tag_also_called_nt(t):
@@ -64,7 +67,7 @@ def p_tag_also_called_nt(t):
                           | empty'''
     # tags that can be repeated are stored in a list
     if (len(t) > 2):
-        if (t[4] != None and isinstance(t[4], list)):
+        if (t[4] != None):
             t[0] = t[4]
             t[0].append(t[2])
         else:
@@ -80,7 +83,13 @@ def p_tag_language_mapped_topic_nt(t):
 def p_tag_group_nt(t): 
     '''tag_group_nt : TAG_GROUP ATTRIBUTE_URL URL ATTRIBUTE_ID NUMBER TAG_CLOSURE text_of_tag_nt TAG_GROUP_CLOSURE tag_group_nt
                     | TAG_GROUP ATTRIBUTE_URL URL ATTRIBUTE_ID NUMBER TAG_CLOSURE text_of_tag_nt TAG_GROUP_CLOSURE'''
-    print(f'[p_tag_group_nt]: {t[1]} + {t[3]} + {t[4]} + {t[5]} + {t[6]}')
+    # save attributes and tag text
+    group_dic = {'attributes': {t[2][:-1]: t[3][1:-1], t[4][:-1]: t[5]}, 'tag-text': t[7]}
+    if (len(t) == 10):
+        t[0] = t[9]
+        t[0].append(group_dic)
+    else: 
+        t[0] = [group_dic]
 
 def p_tag_see_reference_nt(t):
     '''tag_see_reference_nt : TAG_SEE_REFERENCE text_of_tag_nt TAG_SEE_REFERENCE_CLOSURE tag_see_reference_nt
