@@ -2,14 +2,16 @@ import ply.yacc as yacc
 from lexer import tokens
 
 # Dictionary used to save the parsing result
-xml_dict = {}
+xml_dict = {'total': None,
+            'date_created': None, 
+            'time_created': None,
+            'health_topics': {}}
 
 def p_medi_plus_xml(t):
     'medi_plus_xml : header body TAG_HEALTH_TOPICS_CLOSURE'
-    print(f'[p_medi_plus_xml]: {t[3]}') 
-    xml_dict[t[1][0]] = t[1][1] # save the number of health topics in the XML
-    xml_dict[t[1][2]] = t[1][3] # save the date of creation
-    xml_dict[t[1][4]] = t[1][5] # save the time of creation
+    xml_dict["total"] = t[1][1] # save the number of health topics in the XML
+    xml_dict['date_created'] = t[1][3] # save the date of creation
+    xml_dict['time_created'] = t[1][5] # save the time of creation
     
 
 def p_header(t):
@@ -23,26 +25,31 @@ def p_header_version_encoding(t):
     
 def p_tag_health_topics(t):
     'tag_health_topics_nt : TAG_HEALTH_TOPICS ATTRIBUTE_TOTAL NUMBER ATTRIBUTE_DATE_GENERATED DATE TIME TAG_CLOSURE'
-    # save total and creation date/time in a tuple and send it to the higher production 
+    # Save total and creation date/time in a tuple and send it to the higher production 
     t[0] = ("total", t[3], "date_created", t[5][1:], "time_created", t[6])
 
 def p_body(t):
     '''body : tag_health_topic_nt tags_under_health_topic TAG_HEALTH_TOPIC_CLOSURE body 
             | empty'''
-    if(len(t) > 2):
-        print(f'[p_body]: {t[3]}')
-
+    if (len(t) > 2):
+        # We use the `id` as the key for the health topic
+        # The health topic is saved directly in `xml_dict`, without being sent to a higher production 
+        xml_dict['health_topics'][t[1]['id']] = {'attributes' : t[1]}
+        
 def p_health_topic_nt(t):
     'tag_health_topic_nt : TAG_HEALTH_TOPIC attributes_health_topic TAG_CLOSURE'
-    print(f'[tag_health_topic_nt]: {t[1]} + {t[3]}') 
+    # save the attributes of tag <health-topic>
+    t[0] = t[2]
 
 def p_attributes_health_topic(t):
     '''attributes_health_topic : ATTRIBUTE_META_DESC TEXT_OF_ATTRIBUTE ATTRIBUTE_TITLE TEXT_OF_ATTRIBUTE ATTRIBUTE_URL URL ATTRIBUTE_ID NUMBER ATTRIBUTE_LANGUAGE TEXT_OF_ATTRIBUTE ATTRIBUTE_DATE_CREATED DATE
                                | ATTRIBUTE_URL URL ATTRIBUTE_ID NUMBER ATTRIBUTE_LANGUAGE TEXT_OF_ATTRIBUTE'''
-    if(len(t) == 13):
-        print(f'[p_attributes_health_topic]: {t[1]} + {t[2]} + {t[3]} + {t[4]} + {t[5]} + {t[6]} + {t[7]} + {t[8]} + {t[9]} + {t[10]} + {t[11]} + {t[12]}')
+    # save the attributes of tag <health-topic> in a dictionary
+    if (len(t) == 13):
+        t[0] = {t[1][:-1] : t[2][1:-1], t[3][:-1] : t[4][1:-1], t[5][:-1] : t[6][1:-1], 
+                t[7][:-1] : t[8], t[9][:-1] : t[10][1:-1], t[11][-1] : t[12][1:-1]}
     else:
-        print(f'[p_attributes_health_topic]: {t[1]} + {t[2]} + {t[3]} + {t[4]} + {t[5]} + {t[6]}')
+        t[0] = {t[1][:-1] : t[2][1:-1], t[3][:-1] : t[4], t[5][:-1] : t[6][1:-1]}
 
 def p_tags_under_health_topic(t):
     'tags_under_health_topic : tag_also_called_nt TAG_FULL_SUMMARY tag_group_nt tag_language_mapped_topic_nt tag_mesh_heading_nt tag_other_language_nt tag_primary_institute_nt tag_related_topic_nt tag_see_reference_nt tag_site_nt' 
