@@ -1,12 +1,20 @@
 import ply.yacc as yacc
 from lexer import tokens
 
+# Dictionary used to save the parsing result
+xml_dict = {}
+
 def p_medi_plus_xml(t):
     'medi_plus_xml : header body TAG_HEALTH_TOPICS_CLOSURE'
-    print(f'[p_medi_plus_xml]: {t[3]}')
+    print(f'[p_medi_plus_xml]: {t[3]}') 
+    xml_dict[t[1][0]] = t[1][1] # save the number of health topics in the XML
+    xml_dict[t[1][2]] = t[1][3] # save the date of creation
+    xml_dict[t[1][4]] = t[1][5] # save the time of creation
+    
 
 def p_header(t):
     'header : header_version_encoding TAG_DOCTYPE tag_health_topics_nt'
+    t[0] = t[3]
     print(f'[p_header]: {t[2]}')
 
 def p_header_version_encoding(t):
@@ -15,7 +23,8 @@ def p_header_version_encoding(t):
     
 def p_tag_health_topics(t):
     'tag_health_topics_nt : TAG_HEALTH_TOPICS ATTRIBUTE_TOTAL NUMBER ATTRIBUTE_DATE_GENERATED DATE TIME TAG_CLOSURE'
-    print(f'[p_tag_health_topics]: {t[1]} + {t[2]} + {t[3]} + {t[4]} + {t[5]} + {t[6]} + {t[7]}')
+    # save total and creation date/time in a tuple and send it to the higher production 
+    t[0] = ("total", t[3], "date_created", t[5][1:], "time_created", t[6])
 
 def p_body(t):
     '''body : tag_health_topic_nt tags_under_health_topic TAG_HEALTH_TOPIC_CLOSURE body 
