@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block title %}Feature 2{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{url_for('static', filename='style.css')}}" type="text/css" />
+{% endblock %}
+
+{% block content %}
+    <div class="section">
+        <h1>10 Most Popular Information Categories</h1>
+        <p>Lorem Ipsum</p>
+        <div class="plot-section">
+            <img src="data:image/png;base64,{{ category_plot }}" alt="10 most popular information categories">
+        </div>
+    </div>
+{% endblock %}
