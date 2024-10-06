@@ -46,7 +46,9 @@ inf_category_counts = {
 @app.route('/', methods=['GET'])
 def index():
     """Returns rendered root page."""
-    return render_template("index.html")
+    return render_template("index.html", date=xml_dict['date_created'], 
+                           time=xml_dict['time_created'], 
+                           counts=xml_dict['total'])
 
 @app.route('/feature1.html', methods=['GET'])
 def render_feature_1():
