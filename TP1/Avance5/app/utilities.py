@@ -1,3 +1,8 @@
+from io import BytesIO
+import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd
+
 def get_category_frequency(medline_dict):
     """
     This function takes a dictionary `medline_dict` and counts the frequency of information categories
@@ -31,6 +36,20 @@ def get_category_frequency(medline_dict):
 
 
 def get_image_frequent_categories(inf_category_counts):
-    return 0:
-    
+    columns=['Category', 'Count']
+    # cast the `inf_category_counts` dictionary to a dataFrame
+    df_category_counts = pd.DataFrame(list(inf_category_counts.items()), columns=columns)
+    # get the 10 most popular categories
+    popular_category_counts = df_category_counts.sort_values(by='Count', ascending=False).head(10)
+
+    # create a horizontal barplot
+    plt.figure(figsize=(6, 6))
+    sns.barplot(x='Count', y='Category', data=popular_category_counts, orient='h')
+    plt.xlabel('Count')
+    plt.ylabel('Category')
+    plt.tight_layout()
+    buffer = BytesIO()
+    plt.savefig(buffer, format='png')
+    plt.close()
+    return buffer
 
