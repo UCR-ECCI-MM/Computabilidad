@@ -30,13 +30,19 @@ def get_category_frequency(medline_dict):
                                             else:
                                                 # add the key with initial value of 1
                                                 inf_category_counts[category] = 1
-                                
-    print(inf_category_counts)
+    print("--------------------------------------------------------------------------------------------------------------------------------------------------")
+    print(f"Log (frequency of `information-category` tag):\n{inf_category_counts}")
+    print("--------------------------------------------------------------------------------------------------------------------------------------------------\n")
     return inf_category_counts
 
 
 def get_image_frequent_categories(inf_category_counts):
+    """
+    This function takes a dictionary `inf_category_counts` and generates a horizontal bar plot
+    of the 10 most frequent categories. The plot is saved to a BytesIO buffer and returned.
+    """
     columns=['Category', 'Count']
+
     # cast the `inf_category_counts` dictionary to a dataFrame
     df_category_counts = pd.DataFrame(list(inf_category_counts.items()), columns=columns)
     # get the 10 most popular categories

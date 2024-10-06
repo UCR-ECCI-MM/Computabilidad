@@ -2,6 +2,7 @@
 
 import base64
 import json
+from io import BytesIO
 from flask import render_template
 from flask import current_app as app
 from parser import parser
@@ -19,6 +20,10 @@ with open("data/mplus_topics_2024-08-10(2).xml", "r", encoding='utf-8') as file:
     parser.parse(data)
 #print(xml_dict)
 
+"""
+We generate the plot once per server execution. The `10 most frequent categories` plot 
+is saved to a BytesIO buffer.
+"""
 frequent_category_plot_buffer = get_image_frequent_categories(get_category_frequency(xml_dict))
 
 
@@ -51,7 +56,6 @@ def render_feature_1():
 @app.route('/feature2.html', methods=['GET'])
 def render_feature_2():
     """Returns rendered feature2 page."""
-
     # Encode the image to base64 for embedding in HTML
     category_plot = base64.b64encode(frequent_category_plot_buffer.getvalue()).decode('utf8')
 

@@ -288,7 +288,6 @@ def t_error(t):
     """Error handling rule"""
     print("*****ERROR*****")
     print(f"Illegal character '{str(t.value[0])}'")
-    character = input("Press a Key to continue: ")
     t.lexer.skip(1)
     
 
