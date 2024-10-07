@@ -285,11 +285,8 @@ t_ignore matches a string containing ignored characters (spaces and tabs)
 t_ignore  = ' \t'
 
 def t_error(t):
-    """Error handling rule"""
-    print("*****ERROR*****")
-    print(f"Illegal character '{str(t.value[0])}'")
-    t.lexer.skip(1)
-    
+    # Raise an exception
+    raise SyntaxError("Lexer error. Illegal character '%s'" % str(t.value[0]))
 
 # Build the lexer used by the parser
 lexer = lex.lex()

@@ -277,7 +277,8 @@ def p_empty(t):
 
     
 def p_error(t):
-    print("Syntax error at '%s'" % t.value)
+    # Raise an exception
+    raise SyntaxError("Parser error at '%s'" % t.value)
 
 
 parser = yacc.yacc()
