@@ -27,22 +27,6 @@ is saved to a BytesIO buffer.
 frequent_category_plot_buffer = get_image_frequent_categories(get_category_frequency(xml_dict))
 
 
-# Example data with  <information- category> tag counts:
-inf_category_counts = {
-    'Treatments and Therapies': 1000,
-    'Patient Handouts': 900,
-    'Encyclopedia': 600,
-    'Start Here': 700,
-    'Find an Expert': 800,
-    'Reference Desk': 500,
-    'Journal Articles': 400,
-    'Symptoms': 100,
-    'Health Check Tools': 300,
-    'Related Issues': 200,
-    'Learn More': 10, 
-    'Find an expert': 40
-}
-
 @app.route('/', methods=['GET'])
 def index():
     """Returns rendered root page."""
@@ -53,7 +37,8 @@ def index():
 @app.route('/feature1.html', methods=['GET'])
 def render_feature_1():
     """Returns rendered feature1 page."""
-    return render_template("feature1.html", json_data=dictionary)
+    #return render_template("feature1.html", json_data=dictionary)
+    return render_template("feature1.html", json_data= {'health_topics' : xml_dict['health_topics'][0:50]})
 
 @app.route('/feature2.html', methods=['GET'])
 def render_feature_2():
