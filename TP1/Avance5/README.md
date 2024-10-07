@@ -1,8 +1,10 @@
 # CI-0124-TP1
 
+
 ## Build Instructions
 
 Assuming that you use Linux or UNIX-like operating system:
+
 1. Open a terminal on `TP1/Avance5` directory
 1. Create a virtual environment
 	```bash
@@ -22,28 +24,39 @@ Assuming that you use Linux or UNIX-like operating system:
 	```
 1. Open a browser and go to `http://localhost:3000/`
 
-## Main page
 
-1. General Dataset Information.
+## Home page
 
-	1. `health-topics` count
+1. General Dataset Information
+
 	1. Dataset's date and time
+	1. `health-topics` count
 
-1. Total number of references for the 10 most popular information categories.
-	1. As a Matplotlib Pie Chart embedded image.
+<img src="img/home.png" alt="Home page">
+
 
 ## Features
 
 1. **Tree Diagram**  
-At this time, the app only displays the first 50 topics to avoid long page load times due to resource limitations on personal computers.
 
-	<img src="img/feature1.png" alt="Tree Diagram">
+Copy, close or open.
 
-1. **Bar plot**
+<img src="img/f1c.png" alt="Tree Diagram close">
 
-	<img src="img/feature2.png" alt="Bar graph">
+<img src="img/f1o.png" alt="Tree Diagram open">
 
-1. **HTML Table**  
-At this time, for display reasons, the `Resources` column shows a maximum of 3 links.  
 
-	<img src="img/html_table.png" alt="HTML Table">
+2. **Bar plot**
+
+Total number of references for the 10 most popular information categories.
+As a Matplotlib Pie Chart embedded image.
+
+<img src="img/f2.png" alt="Bar graph">
+
+
+3. **HTML Table**  
+
+<img src="img/f3.png" alt="HTML Table">
+
+
+
