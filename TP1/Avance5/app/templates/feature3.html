@@ -49,62 +49,76 @@
                 </tr>
             </thead>
             <tbody>
-                {%  if "health-topic" in json_data["health-topics"] %}
-                {% for health_topic in json_data["health-topics"]["health-topic"] %}
+                {%  if "health_topics" in json_data %}
+                {% if json_data["health_topics"] is iterable %}
+                {% for health_topic in json_data["health_topics"] %}
                 <tr>
-                    <td>{{health_topic["@title"]}}</td>
-                    <td>{{health_topic["@meta-desc"]}}</td>
+                    <td>
+                        <a href="{{ health_topic['attributes']['url'] }}">
+                            {{ health_topic['attributes']['title'] }}
+                        </a>
+                    </td>                    
+                    <td>{{health_topic["attributes"]["meta-desc"]}}</td>
                     <td>
                         <ul>
-                            {% if "also-called" in health_topic %}
-                            {% if health_topic["also-called"] is iterable %}
-                            {% if health_topic["also-called"] is string %}  
-                            <li><a href="{{health_topic["@url"]}}">{{health_topic["also-called"]}}</a></li>
-                            {% else %}
-                            {% for item in health_topic["also-called"] %}
-                            <li><a href="{{health_topic["@url"]}}">{{item}}</a></li>
+                            {% if "tags" in health_topic %}
+                            {% if "also-called" in health_topic['tags'] %}
+                            {% if health_topic['tags']["also-called"] is iterable %}
+                            {% for item in health_topic['tags']["also-called"] %}
+                            <li> {{item}} </li>
                             {% endfor %}
                             {% endif %}
+                            {% else %}
+                                N/A
+                            {% endif %}
+                            {% endif %}
+                        </ul>
+                    </td>
+                    <td>
+                        <ul>
+                            {% if "tags" in health_topic %}
+                            {% if "group" in health_topic['tags'] %}
+                                {% if health_topic['tags']["group"] is iterable %}
+                                    {% for group in health_topic['tags']["group"] %}
+                                        <li> 
+                                            <a href="{{ group['attributes']['url'] }}">
+                                                {{ group['tag-text'] }}
+                                            </a>
+                                        </li>
+                                    {% endfor %}
+                                {% endif %}
                             {% endif %}
                             {% else %}
-                            N/A
+                                N/A
                             {% endif %}
                         </ul>
                     </td>
                     <td>
                         <ul>
-                            {% if "group" in health_topic %}
-                                {% if health_topic["group"] is mapping %}
-                            <li><a href="{{health_topic["group"]["@url"]}}">{{health_topic["group"]["#text"]}}</a></li>
-                                {% else %}
-                                    {% if health_topic["group"] is iterable and not health_topic["group"] is string %}
-                                        {% for group_ in health_topic["group"] %}
-                            <li><a href="{{group_["@url"]}}">{{group_["#text"]}}</a></li>
-                                        {% endfor %}
-                                    {% endif %}
+                            {% if "tags" in health_topic %}
+                            {% if "site" in health_topic['tags'] %}
+                                {% if health_topic['tags']["site"] is iterable %}
+                                <ul>
+                                    {% for site in health_topic['tags']["site"] %}
+                                        {% if loop.index <= 3 %}
+                                            <li>
+                                                <a href="{{ site['attributes']['url'] }}">
+                                                    {{ site['attributes']['title'] }}
+                                                </a>
+                                            </li>
+                                        {% endif %}
+                                    {% endfor %}
+                                </ul>
                                 {% endif %}
                             {% endif %}
-                        </ul>
-                    </td>
-                    <td>
-                        <ul>
-                            {% if "site" in health_topic %}
-                                {% if health_topic["site"] is mapping %}
-                            <li><a href="{{health_topic["site"]["@url"]}}">{{health_topic["site"]["@title"]}}</a></li>
-                                {% else %}
-                                    {% if health_topic["site"] is iterable and not health_topic["site"] is string %}
-                                        {%- for reference in health_topic["site"] %}
-                                            {% if loop.index <= 2 %}
-                            <li><a href="{{reference["@url"]}}">{{reference["@title"]}}</a></li>
-                                            {% endif %}
-                                        {%- endfor %}
-                                    {% endif %}
-                                {% endif %}
+                            {% else %}
+                                N/A
                             {% endif %}
                         </ul>
                     </td>
                 </tr>
                 {% endfor %}
+                {%  endif %}
                 {%  endif %}
             </tbody>
         </table>

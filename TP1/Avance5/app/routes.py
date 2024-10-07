@@ -52,4 +52,4 @@ def render_feature_2():
 @app.route('/feature3.html', methods=['GET'])
 def render_feature_3():
     """Returns rendered feature3 page."""
-    return render_template("feature3.html",json_data=dictionary)
+    return render_template("feature3.html",json_data=xml_dict)
