@@ -10,7 +10,7 @@ En total se implemetaron 3 algoritmos de agrupamiento:
 
 ## Requisitos
 
-Es necesario tener instalado `Jupyter_Notebook` o la extensión `Notebook` en Visual Studio Code. Posteriormente abrir el archivo con extensión `clustering.ipynb`
+Es necesario tener instalado `Jupyter_Notebook` o la extensión `Jupyter` en Visual Studio Code. Posteriormente se debe abrir el archivo `clustering.ipynb` con la opción escogida. 
 
 Además, se debe tener instaladas las siguientes versiones de Python y bibliotecas: 
 - **Python**: 3.10.12 
